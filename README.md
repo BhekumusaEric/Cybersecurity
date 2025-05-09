@@ -96,3 +96,64 @@ Students receive comprehensive support through:
 ## 📊 Project Status
 
 This project is currently in development. See the [project roadmap](docs/roadmap.md) for more details.
+
+## 🚀 Deployment
+
+### Option 1: Deploy to Render.com (Recommended for Free Tier)
+
+1. Fork this repository to your GitHub account
+2. Sign up for a [Render.com](https://render.com) account
+3. In the Render dashboard, click "New" and select "Blueprint"
+4. Connect your GitHub repository
+5. Render will automatically detect the `render.yaml` file and set up the services
+6. Click "Apply" to deploy the application
+
+The deployment will create:
+- A web service for the backend API
+- A static site for the frontend
+- Automatically connect the frontend to the backend
+
+### Option 2: Manual Deployment to Render.com
+
+#### Backend Deployment
+
+1. In the Render dashboard, click "New" and select "Web Service"
+2. Connect your GitHub repository
+3. Configure the service:
+   - **Name**: `ethical-hacking-lms-api`
+   - **Environment**: Node
+   - **Build Command**: `cd src/backend && npm install`
+   - **Start Command**: `cd src/backend && node server.js`
+   - **Plan**: Free
+
+4. Add environment variables:
+   - `NODE_ENV`: `production`
+   - `PORT`: `10000`
+   - `JWT_SECRET`: (generate a secure random string)
+   - `JWT_EXPIRE`: `30d`
+   - `DB_DIALECT`: `sqlite`
+
+5. Click "Create Web Service"
+
+#### Frontend Deployment
+
+1. In the Render dashboard, click "New" and select "Static Site"
+2. Connect your GitHub repository
+3. Configure the service:
+   - **Name**: `ethical-hacking-lms`
+   - **Build Command**: `cd src/frontend && npm install && npm run build`
+   - **Publish Directory**: `src/frontend/dist`
+   - **Plan**: Free
+
+4. Add environment variable:
+   - `VITE_API_URL`: (URL of your backend service + `/api`)
+
+5. Click "Create Static Site"
+
+### Option 3: Local Development with Docker
+
+1. Clone the repository
+2. Run `docker-compose -f docker-compose.simple.yml up -d`
+3. Access the application at:
+   - Frontend: http://localhost:8080
+   - Backend API: http://localhost:5002/api
