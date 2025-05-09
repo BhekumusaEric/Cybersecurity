@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Combined frontend and backend service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  # Frontend
+      - "5001:5001"  # Backend API
+    environment:
+      - NODE_ENV=production
+      - PORT=5001
+      - JWT_SECRET=your_jwt_secret_key_here
+      - JWT_EXPIRE=30d
+      - DB_DIALECT=sqlite
+    volumes:
+      - ./data:/app/backend/data
+    restart: unless-stopped
