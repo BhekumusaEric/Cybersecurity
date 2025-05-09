@@ -1,14 +1,13 @@
 version: '3.8'
 
 services:
-  # Combined frontend and backend service
-  app:
+  # Backend API service
+  backend:
     build:
-      context: .
+      context: ./src/backend
       dockerfile: Dockerfile
     ports:
-      - "8080:80"  # Frontend
-      - "5002:5001"  # Backend API
+      - "5002:5001"
     environment:
       - NODE_ENV=production
       - PORT=5001
@@ -16,5 +15,18 @@ services:
       - JWT_EXPIRE=30d
       - DB_DIALECT=sqlite
     volumes:
-      - ./data:/app/backend/data
+      - ./data:/app/data
+    restart: unless-stopped
+
+  # Frontend service
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - API_URL=http://backend:5001
+    depends_on:
+      - backend
     restart: unless-stopped
