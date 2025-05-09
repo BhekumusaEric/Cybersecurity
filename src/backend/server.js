@@ -50,7 +50,17 @@ app.use('/api/modules', moduleRoutes);
 app.use('/api/labs', labRoutes);
 app.use('/api/assessments', assessmentRoutes);
 
-// Health check endpoint
+// Health check endpoints
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Server is running',
+    database: 'connected',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Also add the /api/health endpoint for consistency
 app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
