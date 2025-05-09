@@ -16,7 +16,7 @@ COPY . .
 RUN echo "VITE_API_URL=/api" > .env.production
 
 # Build the application
-RUN npm run build
+RUN NODE_ENV=production npm run build
 
 # Production stage
 FROM nginx:alpine
