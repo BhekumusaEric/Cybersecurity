@@ -51,8 +51,13 @@ app.use('/api/labs', labRoutes);
 app.use('/api/assessments', assessmentRoutes);
 
 // Health check endpoint
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', message: 'Server is running' });
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    message: 'Server is running',
+    database: 'connected',
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Error handling middleware
