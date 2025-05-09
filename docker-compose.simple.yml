@@ -14,6 +14,11 @@ services:
       - JWT_SECRET=your_jwt_secret_key_here
       - JWT_EXPIRE=30d
       - DB_DIALECT=sqlite
+      - DB_HOST=localhost
+      - DB_PORT=5432
+      - DB_NAME=ethical_hacking_lms
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     volumes:
       - ./data:/app/data
     restart: unless-stopped
