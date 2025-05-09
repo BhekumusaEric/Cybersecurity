@@ -13,14 +13,16 @@ services:
       - PORT=5001
       - JWT_SECRET=your_jwt_secret_key_here
       - JWT_EXPIRE=30d
-      - DB_DIALECT=sqlite
-      - DB_HOST=localhost
+      - DB_DIALECT=postgres
+      - DB_HOST=postgres
       - DB_PORT=5432
       - DB_NAME=ethical_hacking_lms
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     volumes:
       - ./data:/app/data
+    depends_on:
+      - postgres
     restart: unless-stopped
 
   # Frontend service
@@ -35,3 +37,19 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=ethical_hacking_lms
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
