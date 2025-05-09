@@ -25,6 +25,14 @@ export default defineConfig(({ command, mode }) => {
     esbuild: {
       loader: 'jsx',
       include: ['src/**/*.js', 'src/**/*.jsx'],
+      jsxInject: `import React from 'react'`,
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        loader: {
+          '.js': 'jsx',
+        },
+      },
     },
     build: {
       outDir: 'dist',
