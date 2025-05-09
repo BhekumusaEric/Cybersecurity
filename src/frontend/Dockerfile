@@ -12,6 +12,9 @@ RUN npm ci
 # Copy the rest of the application
 COPY . .
 
+# Create a .env.production file
+RUN echo "VITE_API_URL=/api" > .env.production
+
 # Build the application
 RUN npm run build
 
