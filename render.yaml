@@ -24,7 +24,7 @@ services:
   - type: web
     name: ethical-hacking-lms
     env: static
-    region: oregon
+    # Removed region as static sites cannot have a region
     plan: free
     buildCommand: cd src/frontend && npm install && npm run build
     staticPublishPath: ./src/frontend/dist
@@ -37,5 +37,5 @@ services:
         fromService:
           name: ethical-hacking-lms-api
           type: web
-          property: url
+          property: host # Changed from url to host
         suffix: /api
