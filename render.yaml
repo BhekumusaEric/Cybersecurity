@@ -4,7 +4,7 @@ services:
     name: ethical-hacking-lms-api
     env: node
     region: oregon
-    plan: free
+    plan: starter # Changed from free to starter
     buildCommand: cd src/backend && npm install
     startCommand: cd src/backend && node server.js
     healthCheckPath: /health
@@ -21,13 +21,10 @@ services:
         value: sqlite
 
   # Frontend static site
-  - type: web
+  - type: static
     name: ethical-hacking-lms
-    env: static
-    # Removed region as static sites cannot have a region
-    plan: free
     buildCommand: cd src/frontend && npm install && npm run build
-    staticPublishPath: ./src/frontend/dist
+    publishPath: ./src/frontend/dist # Changed from staticPublishPath to publishPath
     routes:
       - type: rewrite
         source: /*
@@ -37,5 +34,5 @@ services:
         fromService:
           name: ethical-hacking-lms-api
           type: web
-          property: host # Changed from url to host
+          property: host
         suffix: /api
