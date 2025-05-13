@@ -21,10 +21,12 @@ services:
         value: sqlite
 
   # Frontend static site
-  - type: static
+  - type: web
     name: ethical-hacking-lms
+    env: static
+    plan: starter
     buildCommand: cd src/frontend && npm install && npm run build
-    publishPath: ./src/frontend/dist # Changed from staticPublishPath to publishPath
+    staticPublishPath: ./src/frontend/dist
     routes:
       - type: rewrite
         source: /*
