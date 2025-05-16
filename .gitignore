@@ -132,3 +132,12 @@ public
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# SSL certificates and keys
+*.pem
+*.key
+*.crt
+*.cer
+*.der
+*.priv
+nginx/ssl/

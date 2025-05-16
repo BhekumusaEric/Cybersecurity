@@ -1,0 +1,252 @@
+{
+  "title": "Introduction to Ethical Hacking Assessment",
+  "description": "This comprehensive assessment tests your understanding of ethical hacking fundamentals, including legal and ethical considerations, methodology, and key concepts covered in Module 1.",
+  "type": "quiz",
+  "timeLimit": 45,
+  "passingScore": 70,
+  "maxAttempts": 3,
+  "randomizeQuestions": true,
+  "showAnswers": "after_submission",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary goal of ethical hacking?",
+      "options": [
+        "To exploit vulnerabilities for personal gain",
+        "To identify and fix security vulnerabilities before malicious hackers can exploit them",
+        "To break into systems without permission",
+        "To develop new hacking tools"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Ethical hacking aims to proactively identify and address security vulnerabilities before they can be exploited by malicious actors, thereby improving the overall security posture of an organization."
+    },
+    {
+      "id": "q2",
+      "question": "Which of the following is NOT a phase in the ethical hacking methodology?",
+      "options": [
+        "Reconnaissance",
+        "Scanning",
+        "Exploitation",
+        "Celebration"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The standard ethical hacking methodology includes phases such as Planning and Reconnaissance, Scanning, Vulnerability Analysis, Exploitation, Post-Exploitation, and Reporting. 'Celebration' is not a formal phase in the methodology."
+    },
+    {
+      "id": "q3",
+      "question": "What is the difference between a white hat and a black hat hacker?",
+      "options": [
+        "White hat hackers are more skilled than black hat hackers",
+        "White hat hackers operate with permission and follow legal and ethical guidelines, while black hat hackers operate maliciously and illegally",
+        "White hat hackers only test web applications, while black hat hackers target networks",
+        "White hat hackers work during the day, while black hat hackers work at night"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The key distinction is intent and permission. White hat hackers operate ethically with explicit permission to help improve security, while black hat hackers operate maliciously without permission for personal gain or to cause harm."
+    },
+    {
+      "id": "q4",
+      "question": "Which of the following documents provides written authorization for an ethical hacker to perform security testing?",
+      "options": [
+        "Scope of Work (SOW)",
+        "Rules of Engagement (ROE)",
+        "Non-Disclosure Agreement (NDA)",
+        "Get-Out-of-Jail-Free Letter"
+      ],
+      "correctAnswer": 3,
+      "explanation": "While all these documents are important, the 'Get-Out-of-Jail-Free Letter' specifically provides written authorization that can be presented if the ethical hacker is questioned about their activities during testing."
+    },
+    {
+      "id": "q5",
+      "question": "What U.S. law prohibits unauthorized access to protected computers and is a primary legal concern for ethical hackers?",
+      "options": [
+        "Digital Millennium Copyright Act (DMCA)",
+        "Computer Fraud and Abuse Act (CFAA)",
+        "Electronic Communications Privacy Act (ECPA)",
+        "General Data Protection Regulation (GDPR)"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The Computer Fraud and Abuse Act (CFAA) is a U.S. federal law that prohibits unauthorized access to protected computers and networks, making it a critical legal consideration for ethical hackers."
+    },
+    {
+      "id": "q6",
+      "question": "Which type of security assessment actively attempts to exploit vulnerabilities to demonstrate their real-world impact?",
+      "options": [
+        "Vulnerability Assessment",
+        "Security Code Review",
+        "Penetration Testing",
+        "Compliance Audit"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Penetration testing goes beyond identifying vulnerabilities (as in a vulnerability assessment) by actively attempting to exploit them to demonstrate their real-world impact and the potential damage that could result."
+    },
+    {
+      "id": "q7",
+      "question": "What is the primary purpose of the reconnaissance phase in ethical hacking?",
+      "options": [
+        "To exploit vulnerabilities in the target system",
+        "To gain administrative access to the target system",
+        "To gather information about the target without direct interaction",
+        "To report findings to the client"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The reconnaissance phase focuses on gathering information about the target, often without direct interaction (passive reconnaissance), to map the attack surface and identify potential entry points for later phases."
+    },
+    {
+      "id": "q8",
+      "question": "Which of the following is an example of passive reconnaissance?",
+      "options": [
+        "Port scanning",
+        "Social engineering",
+        "Reviewing publicly available information about a company",
+        "Vulnerability scanning"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Passive reconnaissance involves gathering information without directly interacting with the target. Reviewing publicly available information (OSINT) is a classic example, while port scanning and vulnerability scanning involve active interaction."
+    },
+    {
+      "id": "q9",
+      "question": "What does the term 'Rules of Engagement' refer to in ethical hacking?",
+      "options": [
+        "The legal framework governing hacking activities",
+        "The specific parameters, limitations, and procedures for testing",
+        "The code of ethics followed by professional hackers",
+        "The techniques used to engage with target systems"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Rules of Engagement (ROE) specifically outlines the parameters, limitations, and procedures for testing, including what systems can be tested, when testing can occur, and what techniques are permitted."
+    },
+    {
+      "id": "q10",
+      "question": "What is the purpose of the 'cleaning up' process in the post-exploitation phase?",
+      "options": [
+        "To remove evidence of the penetration test",
+        "To restore systems to their original state and remove any artifacts left during testing",
+        "To clean up the final report before submission",
+        "To remove vulnerabilities from the target system"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The cleaning up process in post-exploitation aims to restore systems to their original state and remove any artifacts (like test files, accounts, or backdoors) created during testing to ensure the system is not left in a compromised state."
+    },
+    {
+      "id": "q11",
+      "question": "Which of the following best describes a 'grey hat' hacker?",
+      "options": [
+        "A hacker who works for government agencies",
+        "A hacker who only targets grey-colored systems",
+        "A hacker who may hack without explicit permission but typically doesn't have malicious intent",
+        "A hacker who alternates between ethical and malicious hacking"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Grey hat hackers operate in a moral gray area - they may hack without explicit permission (unlike white hats) but typically don't have malicious intent (unlike black hats). They might, for example, disclose vulnerabilities to organizations after finding them without permission."
+    },
+    {
+      "id": "q12",
+      "question": "What is the main difference between a vulnerability assessment and a penetration test?",
+      "options": [
+        "Vulnerability assessments are automated, while penetration tests are manual",
+        "Vulnerability assessments identify weaknesses, while penetration tests actively exploit them",
+        "Vulnerability assessments are performed internally, while penetration tests are performed by external consultants",
+        "Vulnerability assessments focus on networks, while penetration tests focus on applications"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The key difference is that vulnerability assessments focus on identifying and cataloging potential security weaknesses, while penetration tests go further by actively exploiting those vulnerabilities to demonstrate real-world impact."
+    },
+    {
+      "id": "q13",
+      "question": "What ethical principle is violated if an ethical hacker discovers sensitive data during testing and shares it with unauthorized parties?",
+      "options": [
+        "Respect for privacy",
+        "Do no harm",
+        "Maintain confidentiality",
+        "All of the above"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Sharing sensitive data with unauthorized parties violates multiple ethical principles: respect for privacy of the data subjects, the 'do no harm' principle by potentially causing damage to the organization, and the confidentiality obligation to the client."
+    },
+    {
+      "id": "q14",
+      "question": "Which of the following is NOT typically a technical skill required for ethical hacking?",
+      "options": [
+        "Understanding network protocols",
+        "Knowledge of programming languages",
+        "Familiarity with operating systems",
+        "Marketing and sales expertise"
+      ],
+      "correctAnswer": 3,
+      "explanation": "While ethical hackers need technical skills like networking, programming, and operating system knowledge, marketing and sales expertise is not typically a core technical requirement for the role."
+    },
+    {
+      "id": "q15",
+      "question": "What is the purpose of the scanning phase in the ethical hacking methodology?",
+      "options": [
+        "To gather public information about the target",
+        "To actively probe the target to identify open ports, services, and potential vulnerabilities",
+        "To exploit identified vulnerabilities",
+        "To document and report findings"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The scanning phase involves actively probing the target systems to identify open ports, running services, and potential vulnerabilities that could be exploited in later phases."
+    },
+    {
+      "id": "q16",
+      "question": "What does OSINT stand for in the context of ethical hacking?",
+      "options": [
+        "Open Source Intelligence",
+        "Operational Security Intelligence Network",
+        "Online System Integration",
+        "Offensive Security Intrusion Techniques"
+      ],
+      "correctAnswer": 0,
+      "explanation": "OSINT stands for Open Source Intelligence, which refers to the collection and analysis of information from publicly available sources, such as websites, social media, and public records, during the reconnaissance phase."
+    },
+    {
+      "id": "q17",
+      "question": "Which of the following best describes a 'red team assessment'?",
+      "options": [
+        "A vulnerability scan performed by internal security teams",
+        "A penetration test focused only on web applications",
+        "A simulation of a real-world attack that tests both technical controls and human factors",
+        "A code review process for identifying security flaws in applications"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A red team assessment is a comprehensive simulation of a real-world attack that tests both technical security controls and human factors, often conducted over an extended period without the knowledge of the organization's defenders (blue team)."
+    },
+    {
+      "id": "q18",
+      "question": "What is the primary purpose of documenting the methodology in an ethical hacking report?",
+      "options": [
+        "To demonstrate the hacker's technical expertise",
+        "To provide transparency and allow the client to understand and reproduce the findings",
+        "To fulfill legal requirements",
+        "To justify the cost of the assessment"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Documenting the methodology provides transparency and allows clients to understand how findings were discovered, validate the results, and potentially reproduce the tests in the future to verify that vulnerabilities have been properly remediated."
+    },
+    {
+      "id": "q19",
+      "question": "Which of the following is NOT a common categorization for penetration testing based on the level of information provided?",
+      "options": [
+        "Black box testing",
+        "White box testing",
+        "Grey box testing",
+        "Blue box testing"
+      ],
+      "correctAnswer": 3,
+      "explanation": "The common categorizations are black box (no prior information), white box (full information), and grey box (limited information). 'Blue box testing' is not a standard term in penetration testing methodology."
+    },
+    {
+      "id": "q20",
+      "question": "What is the most important first step before beginning any ethical hacking engagement?",
+      "options": [
+        "Installing hacking tools",
+        "Researching the target company",
+        "Obtaining explicit written permission",
+        "Setting up monitoring systems"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Obtaining explicit written permission is the most critical first step before beginning any ethical hacking engagement. Without proper authorization, the same activities could be considered illegal and result in civil or criminal penalties."
+    }
+  ]
+}

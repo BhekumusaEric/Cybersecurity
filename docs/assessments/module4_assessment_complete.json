@@ -1,0 +1,312 @@
+{
+  "title": "Web Application Security Assessment",
+  "description": "This comprehensive assessment tests your understanding of web application security concepts, vulnerabilities, testing methodologies, and secure coding practices covered in Module 4.",
+  "type": "quiz",
+  "timeLimit": 60,
+  "passingScore": 70,
+  "maxAttempts": 3,
+  "randomizeQuestions": true,
+  "showAnswers": "after_submission",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Which of the following best describes the Same-Origin Policy in web browsers?",
+      "options": [
+        "A policy that prevents websites from using third-party JavaScript libraries",
+        "A security mechanism that restricts how a document or script loaded from one origin can interact with resources from another origin",
+        "A policy that requires all web resources to be loaded from the same domain",
+        "A mechanism that forces all websites to use HTTPS instead of HTTP"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The Same-Origin Policy is a critical security mechanism implemented by web browsers that restricts how a document or script loaded from one origin can interact with resources from another origin. It helps prevent malicious scripts on one page from obtaining access to sensitive data on another web page through the Document Object Model (DOM)."
+    },
+    {
+      "id": "q2",
+      "question": "Which OWASP Top 10 category includes vulnerabilities like SQL injection, NoSQL injection, and OS command injection?",
+      "options": [
+        "Broken Access Control",
+        "Cryptographic Failures",
+        "Injection",
+        "Security Misconfiguration"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Injection vulnerabilities, including SQL injection, NoSQL injection, OS command injection, and LDAP injection, are categorized under 'Injection' in the OWASP Top 10. These vulnerabilities occur when untrusted data is sent to an interpreter as part of a command or query, tricking the interpreter into executing unintended commands or accessing unauthorized data."
+    },
+    {
+      "id": "q3",
+      "question": "What is the primary defense against SQL injection attacks?",
+      "options": [
+        "Input validation",
+        "Parameterized queries (prepared statements)",
+        "Encryption of database credentials",
+        "Regular security patching"
+      ],
+      "correctAnswer": 1,
+      "explanation": "While input validation is important, parameterized queries (prepared statements) are the primary and most effective defense against SQL injection attacks. They separate the SQL code from the data, ensuring that user input is treated strictly as data and cannot alter the structure of the query, regardless of its content."
+    },
+    {
+      "id": "q4",
+      "question": "Which of the following is NOT a type of Cross-Site Scripting (XSS) attack?",
+      "options": [
+        "Reflected XSS",
+        "Stored XSS",
+        "DOM-based XSS",
+        "Recursive XSS"
+      ],
+      "correctAnswer": 3,
+      "explanation": "There are three main types of Cross-Site Scripting (XSS) attacks: Reflected XSS (where the malicious script is reflected off the web server), Stored XSS (where the malicious script is stored on the target server), and DOM-based XSS (where the vulnerability exists in client-side code). 'Recursive XSS' is not a recognized type of XSS attack."
+    },
+    {
+      "id": "q5",
+      "question": "What is the purpose of the Content-Security-Policy (CSP) HTTP header?",
+      "options": [
+        "To encrypt sensitive data transmitted between client and server",
+        "To prevent clickjacking attacks by controlling iframe embedding",
+        "To mitigate Cross-Site Scripting (XSS) and data injection attacks by specifying trusted content sources",
+        "To authenticate users across different domains"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The Content-Security-Policy (CSP) HTTP header helps mitigate Cross-Site Scripting (XSS) and data injection attacks by allowing website administrators to specify which dynamic resources are allowed to load. It restricts the sources of content that a browser should consider valid, helping to prevent the execution of malicious scripts."
+    },
+    {
+      "id": "q6",
+      "question": "Which of the following best describes a Cross-Site Request Forgery (CSRF) attack?",
+      "options": [
+        "An attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated",
+        "An attack that allows the execution of arbitrary code on the victim's browser",
+        "An attack that intercepts communication between client and server to steal sensitive information",
+        "An attack that exploits vulnerabilities in the web server's operating system"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Cross-Site Request Forgery (CSRF) is an attack that forces an authenticated user to execute unwanted actions on a web application without their knowledge. The attacker crafts a malicious request (typically a state-changing request like fund transfer, password change, etc.) and tricks the victim into submitting it, leveraging the victim's authenticated session."
+    },
+    {
+      "id": "q7",
+      "question": "What is the primary purpose of using HTTPS instead of HTTP?",
+      "options": [
+        "To increase the loading speed of web pages",
+        "To encrypt the data transmitted between the client and server",
+        "To compress web content for faster transmission",
+        "To enable advanced JavaScript functionality"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The primary purpose of HTTPS (HTTP Secure) is to encrypt the data transmitted between the client and server, providing confidentiality and integrity protection. It uses TLS (Transport Layer Security) to create a secure encrypted connection, preventing eavesdropping, tampering, and message forgery."
+    },
+    {
+      "id": "q8",
+      "question": "Which of the following is an example of broken access control?",
+      "options": [
+        "Using weak encryption algorithms for storing passwords",
+        "Allowing users to view other users' private data by modifying URL parameters",
+        "Failing to validate user input, leading to SQL injection",
+        "Using outdated libraries with known vulnerabilities"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Allowing users to access other users' private data by simply modifying URL parameters (e.g., changing id=123 to id=124) is a classic example of broken access control. This vulnerability occurs when an application does not properly enforce restrictions on what authenticated users are allowed to do, allowing them to access unauthorized functionality or data."
+    },
+    {
+      "id": "q9",
+      "question": "What is the purpose of the 'HttpOnly' flag in cookies?",
+      "options": [
+        "To ensure cookies are only sent over HTTPS connections",
+        "To prevent client-side scripts from accessing the cookie",
+        "To make cookies persist even after the browser is closed",
+        "To allow cookies to be shared across different domains"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The 'HttpOnly' flag in cookies prevents client-side scripts (particularly JavaScript) from accessing the cookie. This is an important security measure that helps mitigate cross-site scripting (XSS) attacks by preventing attackers from stealing session cookies through injected scripts, even if an XSS vulnerability exists."
+    },
+    {
+      "id": "q10",
+      "question": "Which tool is primarily used as an intercepting proxy for web application security testing?",
+      "options": [
+        "Nmap",
+        "Wireshark",
+        "Burp Suite",
+        "Metasploit"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Burp Suite is primarily used as an intercepting proxy for web application security testing. It allows security professionals to intercept, inspect, and modify the HTTP/HTTPS traffic between their browser and the target application, making it an essential tool for manual web application testing."
+    },
+    {
+      "id": "q11",
+      "question": "What is the main security risk of using the eval() function in JavaScript?",
+      "options": [
+        "It significantly slows down the application",
+        "It can execute arbitrary code if user input is passed to it",
+        "It is deprecated in modern browsers",
+        "It consumes excessive memory"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The main security risk of using eval() in JavaScript is that it can execute arbitrary code if user input is passed to it. This can lead to cross-site scripting (XSS) vulnerabilities if an attacker can control the input, potentially allowing them to execute malicious JavaScript in the context of the application."
+    },
+    {
+      "id": "q12",
+      "question": "Which of the following best describes Server-Side Request Forgery (SSRF)?",
+      "options": [
+        "An attack where the server is tricked into executing malicious SQL queries",
+        "An attack where the server is forced to make requests to unintended locations",
+        "An attack that exploits weak server-side authentication mechanisms",
+        "An attack that targets server memory to extract sensitive information"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Server-Side Request Forgery (SSRF) is an attack where the server is tricked into making requests to unintended locations. The attacker abuses functionality on the server to read or update internal resources, potentially accessing services within the organization's infrastructure that are not directly accessible from the external network."
+    },
+    {
+      "id": "q13",
+      "question": "What is the primary purpose of the OWASP ZAP (Zed Attack Proxy) tool?",
+      "options": [
+        "Network vulnerability scanning",
+        "Password cracking",
+        "Web application security testing",
+        "Malware analysis"
+      ],
+      "correctAnswer": 2,
+      "explanation": "OWASP ZAP (Zed Attack Proxy) is primarily designed for web application security testing. It's an open-source tool that helps find security vulnerabilities in web applications during the development and testing phases, functioning as both an intercepting proxy and an automated scanner."
+    },
+    {
+      "id": "q14",
+      "question": "Which of the following is NOT a common defense against Cross-Site Scripting (XSS) attacks?",
+      "options": [
+        "Input validation",
+        "Output encoding",
+        "Content-Security-Policy (CSP)",
+        "Transport Layer Security (TLS)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Transport Layer Security (TLS) is not a defense against Cross-Site Scripting (XSS) attacks. TLS secures the connection between client and server but doesn't prevent XSS. The primary defenses against XSS include input validation, output encoding (context-specific), and implementing Content-Security-Policy (CSP) headers."
+    },
+    {
+      "id": "q15",
+      "question": "What is the purpose of the 'SameSite' attribute in cookies?",
+      "options": [
+        "To ensure cookies are only valid for a specific domain",
+        "To restrict cookies from being sent in cross-site requests",
+        "To encrypt cookie values",
+        "To extend cookie expiration time"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The 'SameSite' attribute in cookies restricts when cookies are sent in cross-site requests, helping to prevent cross-site request forgery (CSRF) attacks. When set to 'Strict', cookies are only sent in first-party context. When set to 'Lax', cookies are sent in first-party context and with safe HTTP methods in third-party context."
+    },
+    {
+      "id": "q16",
+      "question": "Which phase of web application security testing involves identifying the technology stack, user roles, and business functions?",
+      "options": [
+        "Reconnaissance and Information Gathering",
+        "Mapping the Application",
+        "Vulnerability Analysis",
+        "Exploitation"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Mapping the Application is the phase where testers identify the technology stack, user roles, business functions, authentication mechanisms, and session management. This phase creates a comprehensive understanding of the application's structure and functionality before proceeding to vulnerability analysis."
+    },
+    {
+      "id": "q17",
+      "question": "What is the primary risk of XML External Entity (XXE) attacks?",
+      "options": [
+        "Execution of arbitrary code on the server",
+        "Disclosure of confidential files on the server",
+        "Denial of service by consuming server resources",
+        "All of the above"
+      ],
+      "correctAnswer": 3,
+      "explanation": "XML External Entity (XXE) attacks can lead to multiple risks, including disclosure of confidential files on the server, server-side request forgery, denial of service by consuming server resources, and in some cases, execution of arbitrary code. This makes XXE a versatile and dangerous attack vector."
+    },
+    {
+      "id": "q18",
+      "question": "Which of the following is a secure way to store user passwords in a database?",
+      "options": [
+        "Using MD5 hashing",
+        "Storing them in plaintext with encrypted database connections",
+        "Using a strong hashing algorithm with salt (e.g., bcrypt, Argon2)",
+        "Base64 encoding the passwords"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The secure way to store user passwords is using a strong hashing algorithm with salt, such as bcrypt, Argon2, or PBKDF2. These algorithms are designed to be computationally intensive and include built-in salting, making them resistant to rainbow table attacks and brute force attempts."
+    },
+    {
+      "id": "q19",
+      "question": "What is the purpose of the X-Frame-Options HTTP header?",
+      "options": [
+        "To prevent clickjacking attacks by controlling whether a page can be displayed in frames",
+        "To specify which domains can load resources from the current domain",
+        "To prevent browsers from MIME-sniffing a response away from the declared content-type",
+        "To enable HTTP Strict Transport Security"
+      ],
+      "correctAnswer": 0,
+      "explanation": "The X-Frame-Options HTTP header is used to prevent clickjacking attacks by controlling whether a browser should be allowed to render a page in a frame, iframe, embed, or object. Values like DENY, SAMEORIGIN, or ALLOW-FROM restrict how the page can be embedded, protecting users from being tricked into clicking on something different from what they perceive."
+    },
+    {
+      "id": "q20",
+      "question": "Which of the following best describes Insecure Direct Object References (IDOR)?",
+      "options": [
+        "Using weak references to objects stored in memory",
+        "Exposing internal implementation objects to users",
+        "Directly exposing database references in error messages",
+        "Allowing users to access objects by manipulating references that should be restricted"
+      ],
+      "correctAnswer": 3,
+      "explanation": "Insecure Direct Object References (IDOR) occur when an application provides direct access to objects based on user-supplied input. This becomes a vulnerability when the references are predictable and the application does not verify the user's authorization to access the requested object, allowing attackers to bypass authorization and access resources directly by manipulating the parameter value."
+    },
+    {
+      "id": "q21",
+      "question": "What is the main purpose of a Web Application Firewall (WAF)?",
+      "options": [
+        "To accelerate the loading of web content",
+        "To filter and monitor HTTP traffic between a web application and the Internet",
+        "To encrypt data transmitted between client and server",
+        "To manage user authentication across multiple web applications"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A Web Application Firewall (WAF) filters and monitors HTTP traffic between a web application and the Internet. It protects web applications by filtering and monitoring HTTP requests for malicious inputs and preventing attacks such as XSS, SQL injection, and other common web application vulnerabilities."
+    },
+    {
+      "id": "q22",
+      "question": "Which of the following is NOT a common method for preventing Cross-Site Request Forgery (CSRF)?",
+      "options": [
+        "Using anti-CSRF tokens",
+        "Implementing SameSite cookie attribute",
+        "Requiring re-authentication for sensitive actions",
+        "Implementing Content-Security-Policy (CSP)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "While Content-Security-Policy (CSP) is an important security header, it's primarily designed to prevent Cross-Site Scripting (XSS) attacks, not CSRF. The common methods for preventing CSRF include using anti-CSRF tokens, implementing the SameSite cookie attribute, and requiring re-authentication for sensitive actions."
+    },
+    {
+      "id": "q23",
+      "question": "What is the primary risk of using components with known vulnerabilities?",
+      "options": [
+        "Increased application size and slower performance",
+        "Compatibility issues with modern browsers",
+        "Attackers can exploit known vulnerabilities to compromise the application",
+        "Higher licensing costs for the application"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The primary risk of using components with known vulnerabilities is that attackers can exploit these known vulnerabilities to compromise the application. Since these vulnerabilities are publicly documented, attackers can easily find and exploit them, often using automated tools, making this a low-effort, high-impact attack vector."
+    },
+    {
+      "id": "q24",
+      "question": "Which of the following best describes the principle of least privilege in web application security?",
+      "options": [
+        "Users should have minimal personal information stored in the application",
+        "Applications should collect the minimum amount of data required",
+        "Users and processes should have only the minimum privileges necessary to perform their functions",
+        "Web servers should run with minimal resource allocation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The principle of least privilege states that users and processes should have only the minimum privileges necessary to perform their functions. This reduces the attack surface and limits the potential damage if an account is compromised. In web applications, this means restricting access rights for users, database connections, application processes, and other components."
+    },
+    {
+      "id": "q25",
+      "question": "What is the main purpose of SQL parameterization (prepared statements)?",
+      "options": [
+        "To improve database query performance",
+        "To make SQL queries more readable",
+        "To prevent SQL injection attacks",
+        "To reduce database server load"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The main purpose of SQL parameterization (prepared statements) is to prevent SQL injection attacks. By separating the SQL code from the data, parameterized queries ensure that user input is treated strictly as data and cannot alter the structure of the query, regardless of its content. This effectively neutralizes SQL injection attempts."
+    }
+  ]
+}

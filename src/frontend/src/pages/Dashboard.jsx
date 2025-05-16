@@ -29,6 +29,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import api from '../../services/api';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -38,25 +39,60 @@ const Dashboard = () => {
   const [courseProgress, setCourseProgress] = useState(0);
   const [upcomingDeadlines, setUpcomingDeadlines] = useState([]);
   const [recentActivities, setRecentActivities] = useState([]);
+  const [moduleStats, setModuleStats] = useState({ completed: 0, inProgress: 0, notStarted: 0 });
+  const [progressData, setProgressData] = useState({
+    completedLabs: 0,
+    totalLabs: 0,
+    passedQuizzes: 0,
+    totalQuizzes: 0
+  });
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Mock data for demonstration
+  // Fetch dashboard data
   useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setCourseProgress(42);
-      setUpcomingDeadlines([
-        { id: 1, title: 'Network Scanning Quiz', dueDate: '2023-05-15', type: 'quiz' },
-        { id: 2, title: 'OWASP Top 10 Lab', dueDate: '2023-05-18', type: 'lab' },
-        { id: 3, title: 'Vulnerability Report', dueDate: '2023-05-20', type: 'assignment' }
-      ]);
-      setRecentActivities([
-        { id: 1, title: 'Completed Linux Basics Quiz', date: '2023-05-05', type: 'quiz', result: 'Passed (85%)' },
-        { id: 2, title: 'Submitted Reconnaissance Lab', date: '2023-05-03', type: 'lab', result: 'Pending Review' },
-        { id: 3, title: 'Started Web App Hacking Module', date: '2023-05-01', type: 'module', result: 'In Progress' }
-      ]);
-      setLoading(false);
-    }, 1000);
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch user progress
+        const progressResponse = await api.get('/api/users/progress');
+        if (progressResponse.data.success) {
+          setCourseProgress(progressResponse.data.overallProgress || 0);
+          setModuleStats({
+            completed: progressResponse.data.completedModules || 0,
+            inProgress: progressResponse.data.inProgressModules || 0,
+            notStarted: progressResponse.data.notStartedModules || 0
+          });
+          setProgressData({
+            completedLabs: progressResponse.data.completedLabs || 0,
+            totalLabs: progressResponse.data.totalLabs || 0,
+            passedQuizzes: progressResponse.data.passedQuizzes || 0,
+            totalQuizzes: progressResponse.data.totalQuizzes || 0
+          });
+        }
+
+        // Fetch upcoming deadlines
+        const deadlinesResponse = await api.get('/api/users/deadlines');
+        if (deadlinesResponse.data.success) {
+          setUpcomingDeadlines(deadlinesResponse.data.deadlines || []);
+        }
+
+        // Fetch recent activities
+        const activitiesResponse = await api.get('/api/users/activities');
+        if (activitiesResponse.data.success) {
+          setRecentActivities(activitiesResponse.data.activities || []);
+        }
+
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
+        setError('Failed to load dashboard data. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
   }, []);
 
   // Chart data
@@ -64,7 +100,11 @@ const Dashboard = () => {
     labels: ['Completed', 'In Progress', 'Not Started'],
     datasets: [
       {
-        data: [5, 2, 5],
+        data: [
+          moduleStats.completed,
+          moduleStats.inProgress,
+          moduleStats.notStarted
+        ],
         backgroundColor: ['#4caf50', '#2196f3', '#e0e0e0'],
         borderWidth: 0,
       },
@@ -120,19 +160,25 @@ const Dashboard = () => {
               <Grid container spacing={2} sx={{ mt: 2 }}>
                 <Grid item xs={12} sm={4}>
                   <Paper elevation={0} sx={{ p: 2, textAlign: 'center', bgcolor: 'background.default' }}>
-                    <Typography variant="h5" color="primary">5/12</Typography>
+                    <Typography variant="h5" color="primary">
+                      {moduleStats.completed}/{moduleStats.completed + moduleStats.inProgress + moduleStats.notStarted}
+                    </Typography>
                     <Typography variant="body2" color="textSecondary">Modules Completed</Typography>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Paper elevation={0} sx={{ p: 2, textAlign: 'center', bgcolor: 'background.default' }}>
-                    <Typography variant="h5" color="primary">12/20</Typography>
+                    <Typography variant="h5" color="primary">
+                      {progressData.completedLabs}/{progressData.totalLabs}
+                    </Typography>
                     <Typography variant="body2" color="textSecondary">Labs Completed</Typography>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Paper elevation={0} sx={{ p: 2, textAlign: 'center', bgcolor: 'background.default' }}>
-                    <Typography variant="h5" color="primary">8/15</Typography>
+                    <Typography variant="h5" color="primary">
+                      {progressData.passedQuizzes}/{progressData.totalQuizzes}
+                    </Typography>
                     <Typography variant="body2" color="textSecondary">Quizzes Passed</Typography>
                   </Paper>
                 </Grid>
@@ -172,7 +218,7 @@ const Dashboard = () => {
                     }}
                   >
                     <Typography variant="h4" component="p" color="primary">
-                      42%
+                      {courseProgress}%
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       Overall

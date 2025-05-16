@@ -29,7 +29,7 @@ import {
   FilterList as FilterListIcon,
   ArrowForward as ArrowForwardIcon
 } from '@mui/icons-material';
-import axios from 'axios';
+import api from '../../services/api';
 
 const CourseList = () => {
   const [courses, setCourses] = useState([]);
@@ -50,117 +50,32 @@ const CourseList = () => {
       try {
         setLoading(true);
 
-        // In a real app, this would be an API call
-        // For now, we'll simulate with setTimeout and mock data
-        setTimeout(() => {
-          // Mock courses data
-          const mockCourses = [
-            {
-              id: '1',
-              title: 'Introduction to Ethical Hacking',
-              description: 'Learn the fundamentals of ethical hacking, including methodology, legal considerations, and basic techniques.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Ethical+Hacking+Intro',
-              duration: 4,
-              level: 'beginner',
-              tags: ['Fundamentals', 'Ethics', 'Methodology'],
-              enrolledStudents: 1245,
-              rating: 4.7,
-              progress: 0
-            },
-            {
-              id: '2',
-              title: 'Network Security and Scanning',
-              description: 'Master network scanning techniques, vulnerability assessment, and exploitation of network services.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Network+Security',
-              duration: 6,
-              level: 'intermediate',
-              tags: ['Network', 'Scanning', 'Nmap'],
-              enrolledStudents: 987,
-              rating: 4.8,
-              progress: 42
-            },
-            {
-              id: '3',
-              title: 'Web Application Security',
-              description: 'Learn to identify and exploit common web vulnerabilities including XSS, SQL injection, and CSRF.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Web+App+Security',
-              duration: 8,
-              level: 'intermediate',
-              tags: ['Web', 'OWASP', 'Injection'],
-              enrolledStudents: 1532,
-              rating: 4.9,
-              progress: 0
-            },
-            {
-              id: '4',
-              title: 'Wireless Network Hacking',
-              description: 'Understand wireless security protocols and learn techniques to test WiFi network security.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Wireless+Hacking',
-              duration: 5,
-              level: 'intermediate',
-              tags: ['Wireless', 'WiFi', 'Aircrack'],
-              enrolledStudents: 756,
-              rating: 4.6,
-              progress: 0
-            },
-            {
-              id: '5',
-              title: 'Advanced Exploitation Techniques',
-              description: 'Master advanced exploitation methods including buffer overflows, shellcode development, and post-exploitation.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Advanced+Exploitation',
-              duration: 10,
-              level: 'advanced',
-              tags: ['Exploitation', 'Shellcode', 'Buffer Overflow'],
-              enrolledStudents: 432,
-              rating: 4.9,
-              progress: 0
-            },
-            {
-              id: '6',
-              title: 'Mobile Application Security',
-              description: 'Learn to test and exploit vulnerabilities in Android and iOS applications.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Mobile+Security',
-              duration: 7,
-              level: 'intermediate',
-              tags: ['Mobile', 'Android', 'iOS'],
-              enrolledStudents: 678,
-              rating: 4.7,
-              progress: 0
-            },
-            {
-              id: '7',
-              title: 'Social Engineering Fundamentals',
-              description: 'Understand the psychological principles behind social engineering and learn common attack techniques.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Social+Engineering',
-              duration: 3,
-              level: 'beginner',
-              tags: ['Social Engineering', 'Psychology', 'Phishing'],
-              enrolledStudents: 1876,
-              rating: 4.8,
-              progress: 0
-            },
-            {
-              id: '8',
-              title: 'Malware Analysis and Reverse Engineering',
-              description: 'Learn techniques to analyze malicious software and understand its behavior.',
-              thumbnail: 'https://via.placeholder.com/800x400?text=Malware+Analysis',
-              duration: 9,
-              level: 'advanced',
-              tags: ['Malware', 'Reverse Engineering', 'Analysis'],
-              enrolledStudents: 543,
-              rating: 4.9,
-              progress: 0
-            }
-          ];
+        // Fetch courses from the API
+        const response = await api.get('/api/courses');
 
-          setCourses(mockCourses);
-          setFilteredCourses(mockCourses);
-          setLoading(false);
-        }, 1000);
+        if (response.data.success) {
+          // Process the courses data to ensure it has all required fields
+          const processedCourses = response.data.data.map(course => ({
+            ...course,
+            // Ensure tags is an array
+            tags: course.tags ?
+              (typeof course.tags === 'string' ? course.tags.split(',').map(tag => tag.trim()) : course.tags)
+              : [],
+            // Set default thumbnail if not provided
+            thumbnail: course.thumbnail || `https://via.placeholder.com/800x400?text=${encodeURIComponent(course.title)}`,
+            // Ensure progress is a number
+            progress: course.progress || 0
+          }));
 
+          setCourses(processedCourses);
+          setFilteredCourses(processedCourses);
+        } else {
+          setError('Failed to load courses: ' + (response.data.message || 'Unknown error'));
+        }
       } catch (err) {
         console.error('Error fetching courses:', err);
         setError('Failed to load courses. Please try again.');
+      } finally {
         setLoading(false);
       }
     };

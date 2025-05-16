@@ -1,0 +1,118 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "ios/EthicalHackingLMS.xcodeproj")
+    build_app(
+      workspace: "ios/EthicalHackingLMS.xcworkspace",
+      scheme: "EthicalHackingLMS",
+      export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.ethicalhackinglms.app" => "match AppStore com.ethicalhackinglms.app"
+        }
+      }
+    )
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Push a new release build to the App Store"
+  lane :release do
+    capture_screenshots
+    increment_build_number(xcodeproj: "ios/EthicalHackingLMS.xcodeproj")
+    build_app(
+      workspace: "ios/EthicalHackingLMS.xcworkspace",
+      scheme: "EthicalHackingLMS",
+      export_method: "app-store",
+      export_options: {
+        provisioningProfiles: {
+          "com.ethicalhackinglms.app" => "match AppStore com.ethicalhackinglms.app"
+        }
+      }
+    )
+    upload_to_app_store(
+      force: true,
+      skip_metadata: false,
+      skip_screenshots: false,
+      skip_binary_upload: false,
+      automatic_release: false,
+      submit_for_review: true,
+      submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false,
+        export_compliance_encryption_updated: false,
+        content_rights_contains_third_party_content: false
+      },
+      precheck_include_in_app_purchases: false
+    )
+  end
+end
+
+platform :android do
+  desc "Push a new beta build to Google Play"
+  lane :beta do
+    increment_version_code(
+      gradle_file_path: "android/app/build.gradle"
+    )
+    gradle(
+      task: "clean assembleRelease",
+      project_dir: "android/"
+    )
+    upload_to_play_store(
+      track: "beta",
+      release_status: "draft",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      aab: "android/app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
+
+  desc "Push a new release build to Google Play"
+  lane :release do
+    capture_screenshots
+    increment_version_code(
+      gradle_file_path: "android/app/build.gradle"
+    )
+    gradle(
+      task: "clean bundleRelease",
+      project_dir: "android/"
+    )
+    upload_to_play_store(
+      track: "production",
+      release_status: "draft",
+      skip_upload_metadata: false,
+      skip_upload_images: false,
+      skip_upload_screenshots: false,
+      aab: "android/app/build/outputs/bundle/release/app-release.aab"
+    )
+  end
+end
+
+desc "Generate app icons and splash screens"
+lane :generate_assets do
+  sh("cd .. && node scripts/generate-assets.js")
+end
+
+desc "Generate app store screenshots"
+lane :capture_screenshots do
+  sh("cd .. && node scripts/generate-screenshots.js")
+end

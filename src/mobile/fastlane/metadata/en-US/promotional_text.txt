@@ -1,0 +1,5 @@
+🔒 NEW: Enhanced offline mode now allows you to download and complete entire modules without an internet connection!
+
+🔥 Just added: Interactive terminal simulations for practicing Linux commands directly in the app.
+
+📱 Now optimized for tablets with a new split-screen interface for improved learning experience.

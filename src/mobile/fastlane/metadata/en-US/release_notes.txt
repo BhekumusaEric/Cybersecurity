@@ -1,0 +1,10 @@
+Version 1.0.0:
+
+• Initial release of the Ethical Hacking LMS mobile app
+• Complete 12-week ethical hacking curriculum
+• Interactive lab environments
+• Comprehensive offline learning capabilities
+• Progress tracking and certification
+• User profiles and community features
+
+Thank you for choosing Ethical Hacking LMS! We're excited to help you on your journey to becoming a skilled ethical hacker.

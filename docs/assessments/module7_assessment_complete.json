@@ -1,0 +1,312 @@
+{
+  "title": "Social Engineering Assessment",
+  "description": "This comprehensive assessment tests your understanding of social engineering concepts, techniques, psychological principles, and countermeasures covered in Module 7.",
+  "type": "quiz",
+  "timeLimit": 60,
+  "passingScore": 70,
+  "maxAttempts": 3,
+  "randomizeQuestions": true,
+  "showAnswers": "after_submission",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary difference between social engineering and technical hacking?",
+      "options": [
+        "Social engineering requires more technical knowledge",
+        "Social engineering exploits human psychology rather than system vulnerabilities",
+        "Social engineering only works against untrained users",
+        "Social engineering always involves in-person interaction"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The primary difference is that social engineering exploits human psychology, behavior, and social tendencies rather than technical system vulnerabilities. It focuses on manipulating people into breaking normal security procedures or divulging confidential information, whereas technical hacking focuses on exploiting software, hardware, or network vulnerabilities."
+    },
+    {
+      "id": "q2",
+      "question": "Which of the following is NOT one of the stages in the typical social engineering attack cycle?",
+      "options": [
+        "Information Gathering",
+        "Relationship Development",
+        "System Penetration",
+        "Exploitation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "System Penetration is not a standard stage in the social engineering attack cycle. The typical cycle includes Information Gathering (research about targets), Relationship Development (establishing trust), Exploitation (manipulating the target to take action), Execution (achieving objectives), and Exit (covering tracks and leaving without suspicion)."
+    },
+    {
+      "id": "q3",
+      "question": "Which psychological principle is being exploited when a social engineer offers a small gift or favor before making a request?",
+      "options": [
+        "Authority",
+        "Scarcity",
+        "Reciprocity",
+        "Social Proof"
+      ],
+      "correctAnswer": 2,
+      "explanation": "This scenario exploits the principle of Reciprocity, which is the tendency for people to feel obligated to return favors. When someone does something for us, we naturally feel compelled to repay them in some way. Social engineers exploit this by offering something (information, assistance, or a small gift) before making their actual request."
+    },
+    {
+      "id": "q4",
+      "question": "What type of social engineering attack involves sending fraudulent communications that appear to come from reputable sources?",
+      "options": [
+        "Pretexting",
+        "Phishing",
+        "Tailgating",
+        "Quid Pro Quo"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Phishing involves sending fraudulent communications (typically emails) that appear to come from reputable sources such as legitimate organizations, colleagues, or trusted individuals. These communications typically contain urgent requests, threats, or opportunities designed to trick recipients into taking actions that benefit the attacker."
+    },
+    {
+      "id": "q5",
+      "question": "Which of the following best describes 'spear phishing'?",
+      "options": [
+        "A phishing attack that targets a specific individual or organization",
+        "A phishing attack that only uses email as the delivery method",
+        "A phishing attack that targets executives or high-value individuals",
+        "A phishing attack that uses urgent language to create time pressure"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Spear phishing is a targeted phishing attack aimed at specific individuals or organizations, rather than random targets. It involves customizing the attack with personal information about the target to make it more convincing. This personalization significantly increases the success rate compared to generic phishing attempts."
+    },
+    {
+      "id": "q6",
+      "question": "What social engineering technique involves creating a fabricated scenario to extract information or gain access?",
+      "options": [
+        "Baiting",
+        "Tailgating",
+        "Pretexting",
+        "Vishing"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Pretexting involves creating a fabricated scenario (a pretext) to extract information or gain access. The attacker usually impersonates someone else (like an IT support technician, executive, or vendor) and creates a narrative that requires the target to divulge information or perform actions they normally wouldn't."
+    },
+    {
+      "id": "q7",
+      "question": "Which of the following is an example of 'tailgating'?",
+      "options": [
+        "Following someone closely on the highway to intimidate them",
+        "Following an authorized person through a secure door without using credentials",
+        "Repeatedly calling someone until they answer",
+        "Monitoring someone's social media activity to gather information"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Tailgating (also called piggybacking) is a physical social engineering technique where an unauthorized person follows an authorized person through a secure access point, such as a door requiring key card access. It exploits people's politeness and reluctance to confront others who might appear to belong."
+    },
+    {
+      "id": "q8",
+      "question": "What psychological principle is being exploited when a social engineer creates urgency by claiming an offer is only available for a limited time?",
+      "options": [
+        "Liking",
+        "Authority",
+        "Scarcity",
+        "Commitment and Consistency"
+      ],
+      "correctAnswer": 2,
+      "explanation": "This scenario exploits the principle of Scarcity, which is the tendency for people to value things that are rare, limited, or time-constrained. When something is perceived as scarce or available only for a limited time, it often creates a sense of urgency that can bypass critical thinking and lead to hasty decisions."
+    },
+    {
+      "id": "q9",
+      "question": "Which type of social engineering attack involves offering something enticing to spark curiosity?",
+      "options": [
+        "Baiting",
+        "Pretexting",
+        "Quid Pro Quo",
+        "Vishing"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Baiting involves offering something enticing to spark curiosity and manipulate the target into taking an action. Examples include leaving infected USB drives in parking lots, offering free downloads that contain malware, or creating enticing clickbait that leads to malicious websites."
+    },
+    {
+      "id": "q10",
+      "question": "What is 'vishing'?",
+      "options": [
+        "Video-based phishing using fake video calls",
+        "Voice phishing using phone calls",
+        "Visual phishing using fake images",
+        "Vulnerability phishing targeting known system weaknesses"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Vishing (Voice Phishing) is a social engineering attack conducted over the phone or voice communication systems. Attackers typically impersonate trusted entities like technical support, banks, or government agencies to create a sense of urgency and trick victims into divulging sensitive information or taking harmful actions."
+    },
+    {
+      "id": "q11",
+      "question": "Which of the following is a 'watering hole attack'?",
+      "options": [
+        "Contaminating the water supply of a target organization",
+        "Compromising websites frequently visited by the target",
+        "Setting up fake water coolers to eavesdrop on conversations",
+        "Flooding a network with traffic to cause a denial of service"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A watering hole attack involves compromising websites that are frequently visited by the target organization or individuals. Rather than directly attacking the target, the attacker infects a site they commonly visit (the 'watering hole'), waiting for them to visit it and become infected. This is particularly effective because the compromised site is one the target already trusts."
+    },
+    {
+      "id": "q12",
+      "question": "What cognitive bias causes people to favor information that confirms their existing beliefs?",
+      "options": [
+        "Optimism Bias",
+        "Framing Effect",
+        "Confirmation Bias",
+        "Overconfidence Effect"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Confirmation Bias is the tendency to search for, interpret, favor, and recall information in a way that confirms one's preexisting beliefs. Social engineers exploit this by presenting information that aligns with the target's existing worldview or expectations, making their deception more likely to be accepted without scrutiny."
+    },
+    {
+      "id": "q13",
+      "question": "Which of the following is the most effective countermeasure against social engineering attacks?",
+      "options": [
+        "Installing antivirus software",
+        "Using firewalls and intrusion detection systems",
+        "Regular security awareness training",
+        "Encrypting all communications"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Regular security awareness training is the most effective countermeasure against social engineering attacks because these attacks primarily exploit human behavior rather than technical vulnerabilities. Technical controls like antivirus, firewalls, and encryption are important but cannot prevent an employee from being manipulated into divulging information or granting access."
+    },
+    {
+      "id": "q14",
+      "question": "What is 'Business Email Compromise' (BEC)?",
+      "options": [
+        "When a business email server is hacked",
+        "When an employee's email account is compromised",
+        "When attackers impersonate executives to authorize fraudulent payments",
+        "When a business accidentally sends confidential information via email"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Business Email Compromise (BEC) is a type of social engineering attack where attackers impersonate executives or other authorized personnel to trick employees (typically in finance departments) into making fraudulent wire transfers or revealing sensitive information. It often involves sophisticated research about the organization's hierarchy and operations."
+    },
+    {
+      "id": "q15",
+      "question": "Which psychological principle is being exploited when a social engineer dresses as a repair technician to gain physical access?",
+      "options": [
+        "Authority",
+        "Social Proof",
+        "Liking",
+        "Commitment and Consistency"
+      ],
+      "correctAnswer": 0,
+      "explanation": "This scenario exploits the principle of Authority. People tend to comply with requests from perceived authority figures. By dressing as a repair technician (a uniform being a symbol of authority), the social engineer creates the impression of legitimate authority, increasing the likelihood that their presence won't be questioned."
+    },
+    {
+      "id": "q16",
+      "question": "What is 'dumpster diving' in the context of social engineering?",
+      "options": [
+        "Physically searching through trash for valuable information",
+        "Looking through deleted files on a computer",
+        "Searching through discarded electronic devices",
+        "Monitoring deleted social media posts"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Dumpster diving in social engineering refers to physically searching through an organization's or individual's trash to find valuable information that could be used in an attack. This might include organizational charts, phone lists, passwords written on notes, financial information, or other sensitive documents that were improperly discarded."
+    },
+    {
+      "id": "q17",
+      "question": "Which of the following is NOT typically included in the planning phase of an ethical social engineering assessment?",
+      "options": [
+        "Defining scope and objectives",
+        "Obtaining proper authorization",
+        "Actual exploitation of identified vulnerabilities",
+        "Risk assessment"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Actual exploitation of identified vulnerabilities is not part of the planning phase but rather the execution phase of an ethical social engineering assessment. The planning phase typically includes defining scope and objectives, obtaining proper written authorization, conducting risk assessments, and creating testing scenarios."
+    },
+    {
+      "id": "q18",
+      "question": "What is the primary purpose of simulated phishing campaigns in organizations?",
+      "options": [
+        "To identify employees who should be disciplined",
+        "To test email filtering systems",
+        "To train employees to recognize and report phishing attempts",
+        "To comply with regulatory requirements"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The primary purpose of simulated phishing campaigns is to train employees to recognize and report phishing attempts. These campaigns provide practical experience in identifying suspicious emails in a safe environment and are most effective when used as an educational tool rather than a punitive one. They help build a security-aware culture and measure the effectiveness of security awareness training."
+    },
+    {
+      "id": "q19",
+      "question": "Which of the following technical controls is most effective against phishing attacks?",
+      "options": [
+        "Firewall",
+        "Intrusion Detection System",
+        "Email authentication (SPF, DKIM, DMARC)",
+        "Full-disk encryption"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Email authentication protocols like SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and DMARC (Domain-based Message Authentication, Reporting, and Conformance) are most effective against phishing attacks. These protocols help verify that emails are actually from the domains they claim to be from, reducing the effectiveness of email spoofing used in phishing attacks."
+    },
+    {
+      "id": "q20",
+      "question": "What administrative control involves verifying requests through a different communication channel than the one used for the initial request?",
+      "options": [
+        "Least privilege principle",
+        "Separation of duties",
+        "Out-of-band verification",
+        "Mandatory access control"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Out-of-band verification involves verifying requests through a different communication channel than the one used for the initial request. For example, if someone requests a password reset via email, the verification might be done through a phone call to a number already on file. This helps prevent social engineering attacks by requiring the attacker to compromise multiple communication channels."
+    },
+    {
+      "id": "q21",
+      "question": "Which of the following is an example of 'smishing'?",
+      "options": [
+        "Sending fraudulent emails with malicious attachments",
+        "Making phone calls pretending to be technical support",
+        "Sending text messages with malicious links",
+        "Following someone into a secure building"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Smishing (SMS Phishing) involves sending fraudulent text messages (SMS) that contain malicious links or request sensitive information. These messages often create a sense of urgency and may appear to come from legitimate organizations like banks, delivery services, or government agencies. Smishing exploits the limited screen size and interface of mobile devices, making it harder to identify suspicious elements."
+    },
+    {
+      "id": "q22",
+      "question": "What type of social engineering attack involves offering a service in exchange for information?",
+      "options": [
+        "Baiting",
+        "Pretexting",
+        "Quid Pro Quo",
+        "Tailgating"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Quid Pro Quo (something for something) attacks involve offering a service or benefit in exchange for information or access. Common examples include attackers posing as IT support staff offering help with a technical problem in exchange for login credentials, or offering free services that require providing personal information."
+    },
+    {
+      "id": "q23",
+      "question": "Which of the following is NOT a common method for gathering information in the reconnaissance phase of social engineering?",
+      "options": [
+        "Searching social media profiles",
+        "Reviewing company websites and job postings",
+        "Directly asking targets for their passwords",
+        "Using OSINT (Open Source Intelligence) tools"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Directly asking targets for their passwords is not a method used in the reconnaissance phase of social engineering. This would be part of the exploitation phase. Reconnaissance typically involves gathering information through non-intrusive means such as searching social media profiles, reviewing company websites and job postings, and using OSINT tools to collect publicly available information about targets."
+    },
+    {
+      "id": "q24",
+      "question": "What is 'shoulder surfing' in the context of social engineering?",
+      "options": [
+        "Monitoring someone's internet browsing history",
+        "Observing someone entering passwords or PINs by looking over their shoulder",
+        "Following someone home to learn their address",
+        "Intercepting Wi-Fi signals to capture data"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Shoulder surfing is a physical social engineering technique where an attacker observes someone entering sensitive information such as passwords, PINs, or other confidential data by looking over their shoulder. This can occur in public places like coffee shops, airports, or even in office environments with open floor plans."
+    },
+    {
+      "id": "q25",
+      "question": "Which of the following best describes the principle of 'social proof' in social engineering?",
+      "options": [
+        "Using fake identification to prove one's identity",
+        "Providing evidence of social status to gain trust",
+        "People's tendency to look to others for cues on how to behave",
+        "Requiring multiple forms of identification for verification"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Social proof is the psychological principle where people look to the actions and behaviors of others to determine what is correct or appropriate, especially in ambiguous situations. Social engineers exploit this by creating the impression that 'everyone is doing it' or by using testimonials and references to establish credibility and trust."
+    }
+  ]
+}

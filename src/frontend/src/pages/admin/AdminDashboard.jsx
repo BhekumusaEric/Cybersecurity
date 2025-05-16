@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Container, 
-  Typography, 
-  Box, 
-  Grid, 
-  Paper, 
-  Tabs, 
-  Tab, 
+import { useState, useEffect } from 'react';
+import {
+  Container,
+  Typography,
+  Box,
+  Grid,
+  Paper,
+  Tabs,
+  Tab,
   Button,
   Card,
   CardContent,
@@ -18,9 +18,9 @@ import {
   ListItemIcon,
   CircularProgress
 } from '@mui/material';
-import { 
-  People as PeopleIcon, 
-  School as SchoolIcon, 
+import {
+  People as PeopleIcon,
+  School as SchoolIcon,
   Assessment as AssessmentIcon,
   Security as SecurityIcon,
   Settings as SettingsIcon,
@@ -165,9 +165,9 @@ const AdminDashboard = () => {
                 <Divider sx={{ mb: 2 }} />
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<PersonIcon />} 
+                    <Button
+                      variant="outlined"
+                      startIcon={<PersonIcon />}
                       fullWidth
                       onClick={() => navigate('/admin/users/new')}
                     >
@@ -175,9 +175,9 @@ const AdminDashboard = () => {
                     </Button>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<BookIcon />} 
+                    <Button
+                      variant="outlined"
+                      startIcon={<BookIcon />}
                       fullWidth
                       onClick={() => navigate('/admin/courses/new')}
                     >
@@ -185,9 +185,9 @@ const AdminDashboard = () => {
                     </Button>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<AssignmentIcon />} 
+                    <Button
+                      variant="outlined"
+                      startIcon={<AssignmentIcon />}
                       fullWidth
                       onClick={() => navigate('/admin/assessments/new')}
                     >
@@ -195,9 +195,9 @@ const AdminDashboard = () => {
                     </Button>
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <Button 
-                      variant="outlined" 
-                      startIcon={<SecurityIcon />} 
+                    <Button
+                      variant="outlined"
+                      startIcon={<SecurityIcon />}
                       fullWidth
                       onClick={() => navigate('/admin/security')}
                     >
@@ -218,27 +218,27 @@ const AdminDashboard = () => {
                     <ListItemIcon>
                       <PersonIcon />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary="New user registered" 
-                      secondary="John Doe - 2 hours ago" 
+                    <ListItemText
+                      primary="New user registered"
+                      secondary="John Doe - 2 hours ago"
                     />
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
                       <BookIcon />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary="Course updated" 
-                      secondary="Web Application Security - 5 hours ago" 
+                    <ListItemText
+                      primary="Course updated"
+                      secondary="Web Application Security - 5 hours ago"
                     />
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
                       <AssignmentIcon />
                     </ListItemIcon>
-                    <ListItemText 
-                      primary="Assessment submitted" 
-                      secondary="Network Security Quiz - 1 day ago" 
+                    <ListItemText
+                      primary="Assessment submitted"
+                      secondary="Network Security Quiz - 1 day ago"
                     />
                   </ListItem>
                 </List>

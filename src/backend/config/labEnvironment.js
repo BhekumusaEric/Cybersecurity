@@ -1,5 +1,9 @@
 import dotenv from 'dotenv';
 import logger from '../utils/logger.js';
+import networkScanningLab from './labEnvironments/network_scanning_lab.js';
+import webAppSecurityLab from './labEnvironments/web_app_security_lab.js';
+import penetrationTestingLab from './labEnvironments/penetration_testing_lab.js';
+import socialEngineeringLab from './labEnvironments/social_engineering_lab.js';
 
 dotenv.config();
 
@@ -8,16 +12,32 @@ const LAB_PROVIDER = process.env.LAB_PROVIDER || 'local';
 const LAB_API_KEY = process.env.LAB_API_KEY;
 const LAB_API_URL = process.env.LAB_API_URL;
 
-// Lab environment templates
+// Import lab templates from separate files
 const labTemplates = {
-  // Network scanning lab
-  'network_scanning': {
-    name: 'Network Scanning Lab',
-    description: 'Lab environment for practicing network scanning techniques',
+  // Network scanning lab - using the detailed configuration
+  'network_scanning': networkScanningLab,
+
+  // Web application security lab - using the detailed configuration
+  'web_app_security': webAppSecurityLab,
+
+  // Penetration testing lab - using the detailed configuration
+  'penetration_testing': penetrationTestingLab,
+
+  // Social engineering lab - using the detailed configuration
+  'social_engineering': socialEngineeringLab,
+
+  // Wireless security lab
+  'wireless_security': {
+    id: 'wireless_security',
+    name: 'Wireless Security Lab',
+    description: 'Lab environment for practicing wireless network security testing and analysis',
+    difficulty: 'intermediate',
+    estimatedTime: 150, // minutes
     machines: [
       {
         name: 'kali',
-        image: 'kali-linux:latest',
+        displayName: 'Kali Linux',
+        image: 'kali-linux:2023.1',
         role: 'attacker',
         resources: {
           cpu: 2,
@@ -26,113 +46,55 @@ const labTemplates = {
         },
         network: {
           ip: '192.168.1.10',
-          subnet: '192.168.1.0/24'
-        }
-      },
-      {
-        name: 'metasploitable',
-        image: 'metasploitable:2',
-        role: 'target',
-        resources: {
-          cpu: 1,
-          memory: '2GB',
-          disk: '10GB'
+          subnet: '192.168.1.0/24',
+          gateway: '192.168.1.1'
         },
-        network: {
-          ip: '192.168.1.100',
-          subnet: '192.168.1.0/24'
-        }
-      },
-      {
-        name: 'windows-target',
-        image: 'windows-server:2016',
-        role: 'target',
-        resources: {
-          cpu: 2,
-          memory: '4GB',
-          disk: '40GB'
-        },
-        network: {
-          ip: '192.168.1.200',
-          subnet: '192.168.1.0/24'
-        }
-      }
-    ],
-    duration: 2 * 60 * 60, // 2 hours in seconds
-    guacamole: {
-      enabled: true,
-      connections: [
-        {
-          name: 'Kali Linux',
-          protocol: 'vnc',
-          hostname: '${kali_ip}',
-          port: 5901,
+        software: [
+          {
+            name: 'Aircrack-ng',
+            version: '1.6',
+            path: '/usr/bin/aircrack-ng'
+          },
+          {
+            name: 'Wireshark',
+            version: '4.0.6',
+            path: '/usr/bin/wireshark'
+          },
+          {
+            name: 'Kismet',
+            version: '2022.08.R1',
+            path: '/usr/bin/kismet'
+          }
+        ],
+        credentials: {
           username: 'kali',
           password: 'kali'
-        },
-        {
-          name: 'Metasploitable',
-          protocol: 'vnc',
-          hostname: '${metasploitable_ip}',
-          port: 5900,
-          username: 'msfadmin',
-          password: 'msfadmin'
-        },
-        {
-          name: 'Windows Server',
-          protocol: 'rdp',
-          hostname: '${windows_target_ip}',
-          port: 3389,
-          username: 'Administrator',
-          password: 'Password123!'
-        }
-      ]
-    }
-  },
-  
-  // Web application security lab
-  'web_app_security': {
-    name: 'Web Application Security Lab',
-    description: 'Lab environment for practicing web application security testing',
-    machines: [
-      {
-        name: 'kali',
-        image: 'kali-linux:latest',
-        role: 'attacker',
-        resources: {
-          cpu: 2,
-          memory: '4GB',
-          disk: '20GB'
-        },
-        network: {
-          ip: '192.168.1.10',
-          subnet: '192.168.1.0/24'
         }
       },
       {
-        name: 'dvwa',
-        image: 'dvwa:latest',
+        name: 'wireless-router',
+        displayName: 'Wireless Router',
+        image: 'wireless-router-sim:latest',
         role: 'target',
         resources: {
           cpu: 1,
-          memory: '2GB',
-          disk: '10GB'
+          memory: '1GB',
+          disk: '5GB'
         },
         network: {
-          ip: '192.168.1.100',
+          ip: '192.168.1.1',
           subnet: '192.168.1.0/24'
         },
-        ports: [
-          {
-            container: 80,
-            host: 8080
-          }
-        ]
+        credentials: {
+          username: 'admin',
+          password: 'admin123'
+        }
       },
       {
-        name: 'juice-shop',
-        image: 'juice-shop:latest',
-        role: 'target',
+        name: 'client1',
+        displayName: 'Client Device 1',
+        image: 'ubuntu:20.04',
+        role: 'client',
         resources: {
           cpu: 1,
           memory: '2GB',
@@ -140,17 +102,12 @@ const labTemplates = {
         },
         network: {
           ip: '192.168.1.101',
-          subnet: '192.168.1.0/24'
-        },
-        ports: [
-          {
-            container: 3000,
-            host: 3000
-          }
-        ]
+          subnet: '192.168.1.0/24',
+          gateway: '192.168.1.1'
+        }
       }
     ],
-    duration: 2 * 60 * 60, // 2 hours in seconds
+    duration: 2.5 * 60 * 60, // 2.5 hours in seconds
     guacamole: {
       enabled: true,
       connections: [
@@ -173,12 +130,12 @@ const labEnvironmentService = {
   startLabEnvironment: async (labId, userId, templateId) => {
     try {
       logger.info(`Starting lab environment for lab ${labId}, user ${userId}, template ${templateId}`);
-      
+
       // In a real implementation, this would call the lab provider API
       // For now, we'll just return a mock response
-      
+
       const template = labTemplates[templateId] || labTemplates.network_scanning;
-      
+
       return {
         id: `lab-${Date.now()}`,
         labId,
@@ -199,15 +156,15 @@ const labEnvironmentService = {
       throw error;
     }
   },
-  
+
   // Stop a lab environment
   stopLabEnvironment: async (environmentId) => {
     try {
       logger.info(`Stopping lab environment ${environmentId}`);
-      
+
       // In a real implementation, this would call the lab provider API
       // For now, we'll just return a mock response
-      
+
       return {
         id: environmentId,
         status: 'stopped',
@@ -218,15 +175,15 @@ const labEnvironmentService = {
       throw error;
     }
   },
-  
+
   // Reset a lab environment
   resetLabEnvironment: async (environmentId) => {
     try {
       logger.info(`Resetting lab environment ${environmentId}`);
-      
+
       // In a real implementation, this would call the lab provider API
       // For now, we'll just return a mock response
-      
+
       return {
         id: environmentId,
         status: 'running',
@@ -237,15 +194,15 @@ const labEnvironmentService = {
       throw error;
     }
   },
-  
+
   // Get lab environment status
   getLabEnvironmentStatus: async (environmentId) => {
     try {
       logger.info(`Getting status for lab environment ${environmentId}`);
-      
+
       // In a real implementation, this would call the lab provider API
       // For now, we'll just return a mock response
-      
+
       return {
         id: environmentId,
         status: 'running',

@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
@@ -13,19 +14,21 @@ export default defineConfig(({ command, mode }) => {
       }),
     ],
     server: {
-      port: 3000,
+      port: 4000,
       proxy: {
         '/api': {
           target: 'http://localhost:5001',
           changeOrigin: true,
           secure: false,
         }
+      },
+      watch: {
+        ignored: ['**/node_modules/**', '**/dist/**', '**/EthicalHackingLMS/**']
       }
     },
     esbuild: {
       loader: 'jsx',
       include: ['src/**/*.js', 'src/**/*.jsx'],
-      jsxInject: `import React from 'react'`,
     },
     optimizeDeps: {
       esbuildOptions: {
@@ -51,6 +54,11 @@ export default defineConfig(({ command, mode }) => {
     define: {
       // Make environment variables available to the client
       'process.env.VITE_API_URL': JSON.stringify(env.VITE_API_URL || ''),
+    },
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src')
+      }
     }
   }
 })

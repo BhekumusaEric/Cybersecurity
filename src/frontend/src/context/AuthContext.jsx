@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../services/api.js';
 
 const AuthContext = createContext();
 
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
-        const response = await axios.get('/auth/verify');
+        const response = await api.get('/api/auth/verify');
 
         if (response.data.success) {
           setUser(response.data.user);
@@ -49,44 +49,33 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       console.log('Registering user with data:', userData);
 
-      // In a real app, this would be an API call
-      // For now, we'll simulate with a mock response
+      const response = await api.post('/api/auth/register', userData);
 
-      // Check if email is already in use (mock check)
-      if (userData.email === 'admin@example.com' ||
-          userData.email === 'instructor@example.com' ||
-          userData.email === 'student@example.com') {
-        console.log('Registration failed: Email already in use');
-        return { success: false, error: 'Email is already in use' };
+      if (response.data.success) {
+        // Store token in localStorage
+        localStorage.setItem('token', response.data.token);
+
+        // Update state
+        setUser(response.data.user);
+        setIsAuthenticated(true);
+
+        return {
+          success: true,
+          message: 'Registration successful',
+          user: response.data.user
+        };
+      } else {
+        setError(response.data.message || 'Registration failed');
+        return {
+          success: false,
+          error: response.data.message
+        };
       }
-
-      // Generate a mock UUID for the new user
-      const mockUserId = 'user_' + Date.now();
-
-      // Create a mock user object
-      const newUser = {
-        id: mockUserId,
-        name: userData.name,
-        email: userData.email,
-        role: 'student' // Default role for new users
-      };
-
-      console.log('New user registered:', newUser);
-
-      // Simulate login after successful registration
-      setUser(newUser);
-      setIsAuthenticated(true);
-
-      // Mock successful registration
-      return {
-        success: true,
-        message: 'Registration successful',
-        user: newUser
-      };
     } catch (error) {
       console.error('Registration error:', error);
-      setError(error.response?.data?.message || 'Registration failed');
-      return { success: false, error: error.response?.data?.message || 'Registration failed' };
+      const errorMessage = error.response?.data?.message || 'Registration failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 
@@ -95,81 +84,63 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
 
-      // In a real app, this would be an API call
-      // For now, we'll simulate with a mock response
+      const response = await api.post('/api/auth/login', { email, password });
 
-      // Mock credentials check
-      if (
-        (email === 'admin@example.com' && password === 'admin123') ||
-        (email === 'instructor@example.com' && password === 'instructor123') ||
-        (email === 'student@example.com' && password === 'student123')
-      ) {
-        // Mock user data based on email
-        let mockUser;
-
-        if (email === 'admin@example.com') {
-          mockUser = {
-            id: '1',
-            name: 'Admin User',
-            email: 'admin@example.com',
-            role: 'admin'
-          };
-        } else if (email === 'instructor@example.com') {
-          mockUser = {
-            id: '2',
-            name: 'Instructor User',
-            email: 'instructor@example.com',
-            role: 'instructor'
-          };
-        } else {
-          mockUser = {
-            id: '3',
-            name: 'Student User',
-            email: 'student@example.com',
-            role: 'student'
-          };
-        }
-
-        // Mock token
-        const token = 'mock_jwt_token_' + Date.now();
-
+      if (response.data.success) {
         // Store token in localStorage
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', response.data.token);
 
         // Update state
-        setUser(mockUser);
+        setUser(response.data.user);
         setIsAuthenticated(true);
 
-        return { success: true, user: mockUser };
+        return { success: true, user: response.data.user };
       } else {
-        return { success: false, error: 'Invalid email or password' };
+        setError(response.data.message || 'Login failed');
+        return { success: false, error: response.data.message };
       }
     } catch (error) {
-      setError(error.response?.data?.message || 'Login failed');
-      return { success: false, error: error.response?.data?.message || 'Login failed' };
+      const errorMessage = error.response?.data?.message || 'Login failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 
   // Logout user
-  const logout = () => {
-    // Clear token from localStorage
-    localStorage.removeItem('token');
+  const logout = async () => {
+    try {
+      // Call the logout API endpoint
+      await api.get('/api/auth/logout');
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      // Clear token from localStorage
+      localStorage.removeItem('token');
 
-    // Reset state
-    setUser(null);
-    setIsAuthenticated(false);
+      // Reset state
+      setUser(null);
+      setIsAuthenticated(false);
+    }
   };
 
   // Update user profile
-  const updateProfile = (profileData) => {
-    // In a real app, this would be an API call
-    // For now, we'll just update the local state
-    setUser({
-      ...user,
-      ...profileData
-    });
+  const updateProfile = async (profileData) => {
+    try {
+      const response = await api.put(`/api/users/profile`, profileData);
 
-    return { success: true };
+      if (response.data.success) {
+        setUser({
+          ...user,
+          ...response.data.user
+        });
+        return { success: true, user: response.data.user };
+      } else {
+        return { success: false, error: response.data.message };
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Profile update failed';
+      return { success: false, error: errorMessage };
+    }
   };
 
   // Forgot password
@@ -177,16 +148,21 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
 
-      // In a real app, this would be an API call
-      // For now, we'll simulate with a mock response
+      const response = await api.post('/api/auth/forgot-password', { email });
 
-      return {
-        success: true,
-        message: 'Password reset email sent'
-      };
+      if (response.data.success) {
+        return {
+          success: true,
+          message: response.data.message || 'Password reset email sent'
+        };
+      } else {
+        setError(response.data.message || 'Password reset request failed');
+        return { success: false, error: response.data.message };
+      }
     } catch (error) {
-      setError(error.response?.data?.message || 'Password reset request failed');
-      return { success: false, error: error.response?.data?.message || 'Password reset request failed' };
+      const errorMessage = error.response?.data?.message || 'Password reset request failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 
@@ -195,16 +171,21 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
 
-      // In a real app, this would be an API call
-      // For now, we'll simulate with a mock response
+      const response = await api.post('/api/auth/reset-password', { token, password });
 
-      return {
-        success: true,
-        message: 'Password reset successful'
-      };
+      if (response.data.success) {
+        return {
+          success: true,
+          message: response.data.message || 'Password reset successful'
+        };
+      } else {
+        setError(response.data.message || 'Password reset failed');
+        return { success: false, error: response.data.message };
+      }
     } catch (error) {
-      setError(error.response?.data?.message || 'Password reset failed');
-      return { success: false, error: error.response?.data?.message || 'Password reset failed' };
+      const errorMessage = error.response?.data?.message || 'Password reset failed';
+      setError(errorMessage);
+      return { success: false, error: errorMessage };
     }
   };
 

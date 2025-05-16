@@ -31,7 +31,9 @@ import {
   DialogContent,
   DialogActions,
   LinearProgress,
-  CircularProgress
+  CircularProgress,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
@@ -51,6 +53,7 @@ import {
 } from '@mui/icons-material';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import MobileLabInterface from '../components/labs/MobileLabInterface';
 
 // Custom tab panel component
 function TabPanel(props) {
@@ -74,6 +77,8 @@ function TabPanel(props) {
 }
 
 const LabDetail = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const { labId } = useParams();
   const [lab, setLab] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -431,17 +436,31 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
   return (
     <Box>
       {/* Lab header */}
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        justifyContent: 'space-between',
+        alignItems: { xs: 'flex-start', sm: 'center' },
+        mb: 3
+      }}>
+        <Box sx={{ width: '100%' }}>
           <Button
             component={Link}
             to="/labs"
             startIcon={<ArrowBackIcon />}
             sx={{ mb: 1 }}
+            size={isMobile ? "small" : "medium"}
           >
             Back to Labs
           </Button>
-          <Typography variant="h4" component="h1">
+          <Typography
+            variant={isMobile ? "h5" : "h4"}
+            component="h1"
+            sx={{
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.125rem' },
+              lineHeight: { xs: 1.3, sm: 1.4 }
+            }}
+          >
             {lab.title}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 1 }}>
@@ -451,6 +470,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
               size="small"
               color="primary"
               variant="outlined"
+              sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
             />
             <Chip
               icon={<InfoIcon />}
@@ -458,6 +478,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
               size="small"
               color="primary"
               variant="outlined"
+              sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
             />
             <Chip
               icon={<InfoIcon />}
@@ -465,17 +486,19 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
               size="small"
               color="primary"
               variant="outlined"
+              sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem' } }}
             />
           </Box>
         </Box>
 
-        <Box>
+        <Box sx={{ mt: { xs: 2, sm: 0 }, alignSelf: { xs: 'flex-end', sm: 'center' } }}>
           <Button
             variant="contained"
             color="primary"
             startIcon={<UploadIcon />}
             onClick={handleOpenSubmitDialog}
-            sx={{ ml: 1 }}
+            sx={{ ml: { xs: 0, sm: 1 } }}
+            size={isMobile ? "small" : "medium"}
           >
             Submit Lab
           </Button>
@@ -483,24 +506,37 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
       </Box>
 
       {/* Progress indicator */}
-      <Paper sx={{ p: 2, mb: 3 }}>
+      <Paper sx={{ p: { xs: 1.5, sm: 2 }, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+          >
             Lab Progress
           </Typography>
-          <Typography variant="body2" color="primary" fontWeight="bold">
+          <Typography
+            variant="body2"
+            color="primary"
+            fontWeight="bold"
+            sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+          >
             {progress}%
           </Typography>
         </Box>
         <LinearProgress
           variant="determinate"
           value={progress}
-          sx={{ height: 8, borderRadius: 4, mt: 1 }}
+          sx={{
+            height: { xs: 6, sm: 8 },
+            borderRadius: { xs: 3, sm: 4 },
+            mt: 1
+          }}
         />
       </Paper>
 
       {/* Lab content */}
-      <Grid container spacing={3}>
+      <Grid container spacing={3} direction={isMobile ? 'column-reverse' : 'row'}>
         <Grid item xs={12} md={6}>
           <Paper sx={{ mb: 3 }}>
             <Tabs
@@ -508,11 +544,34 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
               onChange={handleTabChange}
               variant="scrollable"
               scrollButtons="auto"
-              sx={{ borderBottom: 1, borderColor: 'divider' }}
+              sx={{
+                borderBottom: 1,
+                borderColor: 'divider',
+                minHeight: { xs: '48px', md: '64px' },
+                '& .MuiTab-root': {
+                  minHeight: { xs: '48px', md: '64px' },
+                  py: { xs: 1, md: 2 }
+                }
+              }}
             >
-              <Tab label="Instructions" icon={<DescriptionIcon />} iconPosition="start" />
-              <Tab label="Steps" icon={<AssignmentIcon />} iconPosition="start" />
-              <Tab label="Resources" icon={<InfoIcon />} iconPosition="start" />
+              <Tab
+                label="Instructions"
+                icon={<DescriptionIcon />}
+                iconPosition="start"
+                sx={{ fontSize: { xs: '0.8rem', md: '0.875rem' } }}
+              />
+              <Tab
+                label="Steps"
+                icon={<AssignmentIcon />}
+                iconPosition="start"
+                sx={{ fontSize: { xs: '0.8rem', md: '0.875rem' } }}
+              />
+              <Tab
+                label="Resources"
+                icon={<InfoIcon />}
+                iconPosition="start"
+                sx={{ fontSize: { xs: '0.8rem', md: '0.875rem' } }}
+              />
             </Tabs>
 
             {/* Instructions tab */}
@@ -542,6 +601,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
                             variant="contained"
                             onClick={index === lab.steps.length - 1 ? handleOpenSubmitDialog : handleNext}
                             sx={{ mt: 1, mr: 1 }}
+                            size={isMobile ? "small" : "medium"}
                           >
                             {index === lab.steps.length - 1 ? 'Complete' : 'Continue'}
                           </Button>
@@ -549,6 +609,7 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
                             disabled={index === 0}
                             onClick={handleBack}
                             sx={{ mt: 1, mr: 1 }}
+                            size={isMobile ? "small" : "medium"}
                           >
                             Back
                           </Button>
@@ -588,153 +649,182 @@ Nmap done: 1 IP address (1 host up) scanned in 0.24 seconds
             </TabPanel>
           </Paper>
 
-          {/* Lab submission info */}
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Submission Requirements
-            </Typography>
-            <Typography variant="body2" paragraph>
-              {lab.submissionInstructions}
-            </Typography>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button
-                variant="contained"
-                color="primary"
-                startIcon={<UploadIcon />}
-                onClick={handleOpenSubmitDialog}
-              >
-                Submit Lab
-              </Button>
-            </Box>
-          </Paper>
+          {/* Lab submission info - Hide on mobile if using mobile lab interface */}
+          {(!isMobile || tabValue !== 1) && (
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h6" gutterBottom>
+                Submission Requirements
+              </Typography>
+              <Typography variant="body2" paragraph>
+                {lab.submissionInstructions}
+              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<UploadIcon />}
+                  onClick={handleOpenSubmitDialog}
+                  size={isMobile ? "small" : "medium"}
+                >
+                  Submit Lab
+                </Button>
+              </Box>
+            </Paper>
+          )}
         </Grid>
 
         <Grid item xs={12} md={6}>
           {/* Lab environment */}
           <Paper sx={{ mb: 3 }}>
-            <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <Typography variant="h6">
-                Lab Environment
-              </Typography>
-              <Box>
+            {isMobile ? (
+              /* Mobile Lab Interface */
+              <MobileLabInterface
+                lab={{
+                  title: lab.title,
+                  description: lab.description,
+                  objectives: lab.instructions.match(/## Objectives\n\n([\s\S]*?)(?=\n\n##|$)/)?.[1]
+                    .split('\n')
+                    .filter(line => line.trim().startsWith('- ') || line.trim().startsWith('* ') || line.trim().match(/^\d+\./))
+                    .map(line => line.replace(/^[*-]\s+/, '').replace(/^\d+\.\s+/, ''))
+                    .filter(Boolean) || [],
+                  steps: lab.steps.map(step => ({
+                    title: step.title,
+                    description: step.content
+                  }))
+                }}
+                onComplete={() => {
+                  setProgress(100);
+                  handleOpenSubmitDialog();
+                }}
+              />
+            ) : (
+              /* Desktop Lab Interface */
+              <>
+                <Box sx={{ p: 2, borderBottom: 1, borderColor: 'divider', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography variant="h6">
+                    Lab Environment
+                  </Typography>
+                  <Box>
+                    {labStatus === 'stopped' && (
+                      <Button
+                        variant="contained"
+                        color="success"
+                        startIcon={<PlayArrowIcon />}
+                        onClick={handleStartLab}
+                      >
+                        Start Lab
+                      </Button>
+                    )}
+
+                    {labStatus === 'starting' && (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        disabled
+                      >
+                        Starting...
+                      </Button>
+                    )}
+
+                    {labStatus === 'running' && (
+                      <>
+                        <Button
+                          variant="outlined"
+                          color="warning"
+                          startIcon={<RefreshIcon />}
+                          onClick={handleResetLab}
+                          sx={{ mr: 1 }}
+                        >
+                          Reset
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          startIcon={<StopIcon />}
+                          onClick={handleStopLab}
+                        >
+                          Stop Lab
+                        </Button>
+                      </>
+                    )}
+                  </Box>
+                </Box>
+
                 {labStatus === 'stopped' && (
-                  <Button
-                    variant="contained"
-                    color="success"
-                    startIcon={<PlayArrowIcon />}
-                    onClick={handleStartLab}
-                  >
-                    Start Lab
-                  </Button>
+                  <Box sx={{ p: 3, textAlign: 'center' }}>
+                    <ComputerIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
+                    <Typography variant="body1" gutterBottom>
+                      Lab environment is not running.
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Click "Start Lab" to launch the virtual environment.
+                    </Typography>
+                  </Box>
                 )}
 
                 {labStatus === 'starting' && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    disabled
-                  >
-                    Starting...
-                  </Button>
+                  <Box sx={{ p: 3, textAlign: 'center' }}>
+                    <CircularProgress sx={{ mb: 2 }} />
+                    <Typography variant="body1" gutterBottom>
+                      Starting lab environment...
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      This may take a few moments.
+                    </Typography>
+                  </Box>
                 )}
 
                 {labStatus === 'running' && (
-                  <>
-                    <Button
-                      variant="outlined"
-                      color="warning"
-                      startIcon={<RefreshIcon />}
-                      onClick={handleResetLab}
-                      sx={{ mr: 1 }}
+                  <Box sx={{ p: 0 }}>
+                    <Box
+                      sx={{
+                        bgcolor: 'black',
+                        color: 'lightgreen',
+                        fontFamily: 'monospace',
+                        p: 2,
+                        height: 300,
+                        overflow: 'auto',
+                        whiteSpace: 'pre-wrap'
+                      }}
                     >
-                      Reset
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      startIcon={<StopIcon />}
-                      onClick={handleStopLab}
-                    >
-                      Stop Lab
-                    </Button>
-                  </>
+                      {terminalOutput}
+                    </Box>
+                    <Box component="form" onSubmit={handleCommandSubmit} sx={{ display: 'flex', borderTop: 1, borderColor: 'divider' }}>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        placeholder="Enter command..."
+                        value={command}
+                        onChange={handleCommandChange}
+                        sx={{
+                          '& .MuiOutlinedInput-root': {
+                            borderRadius: 0,
+                          }
+                        }}
+                        InputProps={{
+                          startAdornment: <Box component="span" sx={{ color: 'success.main', mr: 1 }}>$</Box>,
+                        }}
+                      />
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        sx={{ borderRadius: 0 }}
+                      >
+                        Run
+                      </Button>
+                    </Box>
+                  </Box>
                 )}
-              </Box>
-            </Box>
 
-            {labStatus === 'stopped' && (
-              <Box sx={{ p: 3, textAlign: 'center' }}>
-                <ComputerIcon sx={{ fontSize: 60, color: 'text.secondary', mb: 2 }} />
-                <Typography variant="body1" gutterBottom>
-                  Lab environment is not running.
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Click "Start Lab" to launch the virtual environment.
-                </Typography>
-              </Box>
-            )}
-
-            {labStatus === 'starting' && (
-              <Box sx={{ p: 3, textAlign: 'center' }}>
-                <CircularProgress sx={{ mb: 2 }} />
-                <Typography variant="body1" gutterBottom>
-                  Starting lab environment...
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  This may take a few moments.
-                </Typography>
-              </Box>
-            )}
-
-            {labStatus === 'running' && (
-              <Box sx={{ p: 0 }}>
-                <Box
-                  sx={{
-                    bgcolor: 'black',
-                    color: 'lightgreen',
-                    fontFamily: 'monospace',
-                    p: 2,
-                    height: 300,
-                    overflow: 'auto',
-                    whiteSpace: 'pre-wrap'
-                  }}
-                >
-                  {terminalOutput}
-                </Box>
-                <Box component="form" onSubmit={handleCommandSubmit} sx={{ display: 'flex', borderTop: 1, borderColor: 'divider' }}>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    placeholder="Enter command..."
-                    value={command}
-                    onChange={handleCommandChange}
-                    sx={{
-                      '& .MuiOutlinedInput-root': {
-                        borderRadius: 0,
-                      }
-                    }}
-                    InputProps={{
-                      startAdornment: <Box component="span" sx={{ color: 'success.main', mr: 1 }}>$</Box>,
-                    }}
-                  />
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ borderRadius: 0 }}
-                  >
-                    Run
-                  </Button>
-                </Box>
-              </Box>
-            )}
-
-            {labStatus === 'error' && (
-              <Box sx={{ p: 3 }}>
-                <Alert severity="error">
-                  <AlertTitle>Error</AlertTitle>
-                  Failed to start lab environment. Please try again or contact support.
-                </Alert>
-              </Box>
+                {labStatus === 'error' && (
+                  <Box sx={{ p: 3 }}>
+                    <Alert severity="error">
+                      <AlertTitle>Error</AlertTitle>
+                      Failed to start lab environment. Please try again or contact support.
+                    </Alert>
+                  </Box>
+                )}
+              </>
             )}
           </Paper>
 

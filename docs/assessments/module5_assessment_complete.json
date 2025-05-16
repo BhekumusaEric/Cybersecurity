@@ -1,0 +1,312 @@
+{
+  "title": "Cryptography and Secure Communications Assessment",
+  "description": "This comprehensive assessment tests your understanding of cryptographic principles, algorithms, protocols, and their applications in securing communications and data.",
+  "type": "quiz",
+  "timeLimit": 60,
+  "passingScore": 70,
+  "maxAttempts": 3,
+  "randomizeQuestions": true,
+  "showAnswers": "after_submission",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "Which of the following is NOT one of the core goals of cryptography?",
+      "options": [
+        "Confidentiality",
+        "Integrity",
+        "Availability",
+        "Non-repudiation"
+      ],
+      "correctAnswer": 2,
+      "explanation": "While availability is part of the CIA triad in information security, it is not one of the primary goals of cryptography. Cryptography focuses on confidentiality (keeping data secret), integrity (ensuring data hasn't been altered), authentication (verifying identity), and non-repudiation (preventing denial of actions)."
+    },
+    {
+      "id": "q2",
+      "question": "What is the main difference between symmetric and asymmetric encryption?",
+      "options": [
+        "Symmetric encryption is more secure than asymmetric encryption",
+        "Symmetric encryption uses the same key for encryption and decryption, while asymmetric encryption uses different keys",
+        "Symmetric encryption is used for digital signatures, while asymmetric encryption is used for data encryption",
+        "Symmetric encryption works with text data only, while asymmetric encryption works with any data type"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The fundamental difference is that symmetric encryption uses a single shared key for both encryption and decryption, while asymmetric encryption uses a pair of mathematically related keys (public and private) where data encrypted with one key can only be decrypted with the other."
+    },
+    {
+      "id": "q3",
+      "question": "Which of the following symmetric encryption algorithms is currently considered the most secure and is widely adopted as a standard?",
+      "options": [
+        "DES (Data Encryption Standard)",
+        "3DES (Triple DES)",
+        "AES (Advanced Encryption Standard)",
+        "RC4 (Rivest Cipher 4)"
+      ],
+      "correctAnswer": 2,
+      "explanation": "AES (Advanced Encryption Standard) is the current standard for symmetric encryption. It was selected by NIST in 2001 and is widely used due to its security and efficiency. DES is outdated and insecure, 3DES is being phased out, and RC4 has been deprecated due to security vulnerabilities."
+    },
+    {
+      "id": "q4",
+      "question": "What is the recommended minimum key size for RSA encryption in modern applications?",
+      "options": [
+        "512 bits",
+        "1024 bits",
+        "2048 bits",
+        "4096 bits"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The recommended minimum key size for RSA encryption in modern applications is 2048 bits. Keys smaller than this (such as 1024 bits) are considered potentially vulnerable to factoring attacks with sufficient computational resources. For highly sensitive applications, 3072 or 4096 bits may be used."
+    },
+    {
+      "id": "q5",
+      "question": "Which of the following block cipher modes of operation is considered the least secure and should be avoided in most applications?",
+      "options": [
+        "CBC (Cipher Block Chaining)",
+        "ECB (Electronic Codebook)",
+        "CTR (Counter)",
+        "GCM (Galois/Counter Mode)"
+      ],
+      "correctAnswer": 1,
+      "explanation": "ECB (Electronic Codebook) mode is considered the least secure because it encrypts identical plaintext blocks into identical ciphertext blocks, which can reveal patterns in the data. This makes it vulnerable to certain attacks, especially when encrypting structured data or images."
+    },
+    {
+      "id": "q6",
+      "question": "What is the primary advantage of Elliptic Curve Cryptography (ECC) over RSA?",
+      "options": [
+        "ECC is immune to quantum computing attacks",
+        "ECC provides the same security level with smaller key sizes",
+        "ECC is faster for decryption operations only",
+        "ECC has been standardized for longer than RSA"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The primary advantage of ECC over RSA is that it provides equivalent security with significantly smaller key sizes. For example, a 256-bit ECC key provides comparable security to a 3072-bit RSA key. This makes ECC more efficient, especially for devices with limited computational resources."
+    },
+    {
+      "id": "q7",
+      "question": "Which of the following hash functions is considered cryptographically broken and should NOT be used for security-sensitive applications?",
+      "options": [
+        "SHA-256",
+        "SHA-3",
+        "MD5",
+        "BLAKE2"
+      ],
+      "correctAnswer": 2,
+      "explanation": "MD5 is considered cryptographically broken and should not be used for security applications. Researchers have demonstrated collision attacks against MD5, meaning different inputs can produce the same hash output. SHA-256, SHA-3, and BLAKE2 are currently considered secure for cryptographic applications."
+    },
+    {
+      "id": "q8",
+      "question": "What is the purpose of a nonce in cryptographic protocols?",
+      "options": [
+        "To increase the key length for better security",
+        "To ensure that the same plaintext encrypts to different ciphertexts",
+        "To verify the identity of the sender",
+        "To compress the message before encryption"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A nonce (number used once) is used to ensure that the same plaintext encrypts to different ciphertexts, even when using the same key. This prevents pattern analysis and replay attacks. Nonces are typically random or sequential values that are used only once within the context of a cryptographic protocol."
+    },
+    {
+      "id": "q9",
+      "question": "In the context of TLS, what is the purpose of the handshake protocol?",
+      "options": [
+        "To compress data before transmission",
+        "To authenticate the server and establish shared secret keys",
+        "To encrypt the HTTP headers only",
+        "To verify the client's operating system"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The TLS handshake protocol is used to authenticate the server (and optionally the client), negotiate the protocol version and cipher suite to be used, and establish shared secret keys for the session. This happens before any application data is transmitted."
+    },
+    {
+      "id": "q10",
+      "question": "What security property does a digital signature provide that encryption alone does not?",
+      "options": [
+        "Confidentiality",
+        "Non-repudiation",
+        "Forward secrecy",
+        "Compression"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Digital signatures provide non-repudiation, which means the sender cannot deny having sent the message. Encryption alone provides confidentiality but doesn't authenticate the sender or prevent them from later denying they sent the message."
+    },
+    {
+      "id": "q11",
+      "question": "Which of the following is a property of a secure cryptographic hash function?",
+      "options": [
+        "Reversibility - given the hash value, it should be easy to find the original input",
+        "Predictability - similar inputs should produce similar hash values",
+        "Collision resistance - it should be computationally infeasible to find two different inputs with the same hash",
+        "Linearity - the hash of the sum should equal the sum of the hashes"
+      ],
+      "correctAnswer": 2,
+      "explanation": "Collision resistance is a key property of secure hash functions, meaning it should be computationally infeasible to find two different inputs that produce the same hash output. Other properties include preimage resistance (one-way) and second preimage resistance, which are the opposite of reversibility and predictability."
+    },
+    {
+      "id": "q12",
+      "question": "What is the main purpose of a Certificate Authority (CA) in a Public Key Infrastructure?",
+      "options": [
+        "To encrypt all network traffic",
+        "To generate private keys for users",
+        "To verify identities and issue digital certificates",
+        "To store encrypted data securely"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The main purpose of a Certificate Authority (CA) in a PKI is to verify the identity of entities (individuals, organizations, servers) and issue digital certificates that bind their public keys to their verified identities. CAs act as trusted third parties in the certificate ecosystem."
+    },
+    {
+      "id": "q13",
+      "question": "What is the Diffie-Hellman key exchange protocol used for?",
+      "options": [
+        "Digital signatures",
+        "Secure key exchange over an insecure channel",
+        "Password hashing",
+        "Message authentication"
+      ],
+      "correctAnswer": 1,
+      "explanation": "The Diffie-Hellman key exchange protocol allows two parties to securely establish a shared secret key over an insecure communication channel without requiring a pre-shared secret. It's based on the difficulty of the discrete logarithm problem and is fundamental to many secure communications protocols."
+    },
+    {
+      "id": "q14",
+      "question": "Which of the following is a side-channel attack against cryptographic implementations?",
+      "options": [
+        "Brute force attack",
+        "Dictionary attack",
+        "Timing attack",
+        "Birthday attack"
+      ],
+      "correctAnswer": 2,
+      "explanation": "A timing attack is a side-channel attack that exploits timing variations in cryptographic operations to extract sensitive information. Side-channel attacks analyze physical implementation characteristics rather than mathematical weaknesses in the algorithms themselves. Brute force, dictionary, and birthday attacks are cryptanalytic attacks against the algorithms."
+    },
+    {
+      "id": "q15",
+      "question": "What does Perfect Forward Secrecy (PFS) provide in a cryptographic protocol?",
+      "options": [
+        "Absolute security against all types of attacks",
+        "Protection of past communications even if long-term keys are compromised",
+        "Faster encryption and decryption operations",
+        "Compatibility with legacy systems"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Perfect Forward Secrecy (PFS) ensures that session keys will not be compromised even if the long-term private keys of the server are compromised. This means past communications remain secure even if future security is breached. It's typically achieved by generating unique session keys for each connection."
+    },
+    {
+      "id": "q16",
+      "question": "Which encryption mode provides both confidentiality and authentication in a single operation?",
+      "options": [
+        "CBC (Cipher Block Chaining)",
+        "ECB (Electronic Codebook)",
+        "CTR (Counter)",
+        "GCM (Galois/Counter Mode)"
+      ],
+      "correctAnswer": 3,
+      "explanation": "GCM (Galois/Counter Mode) provides both confidentiality and authentication in a single operation. It combines the CTR mode of operation with the Galois mode of authentication, making it an authenticated encryption with associated data (AEAD) mode. This makes it efficient for securing communications where both properties are needed."
+    },
+    {
+      "id": "q17",
+      "question": "What is the primary security concern with using the same initialization vector (IV) multiple times with the same key in CBC mode?",
+      "options": [
+        "It makes the encryption process slower",
+        "It can lead to information leakage about the plaintext",
+        "It increases the key size unnecessarily",
+        "It prevents the decryption process from working correctly"
+      ],
+      "correctAnswer": 1,
+      "explanation": "Reusing the same initialization vector (IV) with the same key in CBC mode can lead to information leakage about the plaintext. If two messages begin with the same content and use the same IV and key, the resulting ciphertext blocks will be identical until the plaintexts differ, potentially revealing relationships between messages."
+    },
+    {
+      "id": "q18",
+      "question": "Which of the following best describes a hybrid cryptosystem?",
+      "options": [
+        "A system that uses multiple hash functions together",
+        "A system that combines symmetric and asymmetric encryption",
+        "A system that works on both classical and quantum computers",
+        "A system that encrypts data multiple times with different algorithms"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A hybrid cryptosystem combines symmetric and asymmetric encryption to leverage the advantages of both. Typically, asymmetric encryption is used to securely exchange a symmetric key, which is then used for bulk data encryption. This approach is common in protocols like TLS, combining the security of asymmetric cryptography with the efficiency of symmetric encryption."
+    },
+    {
+      "id": "q19",
+      "question": "What is the primary purpose of a Message Authentication Code (MAC)?",
+      "options": [
+        "To encrypt messages",
+        "To compress messages before transmission",
+        "To verify the integrity and authenticity of messages",
+        "To generate random encryption keys"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The primary purpose of a Message Authentication Code (MAC) is to verify both the integrity and authenticity of a message. It ensures that the message hasn't been altered in transit (integrity) and confirms it came from the expected sender who possesses the shared secret key (authenticity)."
+    },
+    {
+      "id": "q20",
+      "question": "Which of the following attacks targets the implementation of RSA by measuring the time it takes to perform private key operations?",
+      "options": [
+        "Chosen-ciphertext attack",
+        "Timing attack",
+        "Birthday attack",
+        "Meet-in-the-middle attack"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A timing attack is a side-channel attack that targets the implementation of cryptographic algorithms by analyzing the time taken to perform operations. In RSA, the time to perform modular exponentiation with the private key can leak information about the key itself if the implementation isn't constant-time."
+    },
+    {
+      "id": "q21",
+      "question": "What is the main vulnerability that led to the deprecation of SSL 3.0 and TLS 1.0?",
+      "options": [
+        "They were too computationally intensive",
+        "They were vulnerable to various attacks including POODLE and BEAST",
+        "They didn't support modern cipher suites",
+        "They had licensing restrictions"
+      ],
+      "correctAnswer": 1,
+      "explanation": "SSL 3.0 and TLS 1.0 were deprecated primarily because they were vulnerable to various attacks, including POODLE (Padding Oracle On Downgraded Legacy Encryption) and BEAST (Browser Exploit Against SSL/TLS). These vulnerabilities could allow attackers to decrypt encrypted communications under certain conditions."
+    },
+    {
+      "id": "q22",
+      "question": "In the context of public key cryptography, what does a Certificate Revocation List (CRL) contain?",
+      "options": [
+        "A list of all valid certificates issued by a CA",
+        "A list of certificates that have been revoked before their expiration date",
+        "A list of encryption algorithms supported by a certificate",
+        "A list of root certificates trusted by a system"
+      ],
+      "correctAnswer": 1,
+      "explanation": "A Certificate Revocation List (CRL) contains a list of digital certificates that have been revoked by the issuing Certificate Authority (CA) before their scheduled expiration date. Certificates might be revoked if the private key was compromised, the CA issued the certificate incorrectly, or the certificate owner is no longer authorized to use it."
+    },
+    {
+      "id": "q23",
+      "question": "What is the primary advantage of using HMAC over a simple hash of data concatenated with a secret key?",
+      "options": [
+        "HMAC is always faster to compute",
+        "HMAC uses less memory",
+        "HMAC is resistant to length extension attacks",
+        "HMAC produces shorter output"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The primary advantage of HMAC over simply concatenating data with a key and hashing is that HMAC is resistant to length extension attacks. These attacks can affect many hash functions (like MD5, SHA-1, and SHA-2) when used in the simple concatenation approach, potentially allowing attackers to forge valid MACs for messages they haven't seen."
+    },
+    {
+      "id": "q24",
+      "question": "Which of the following best describes a salt in the context of password hashing?",
+      "options": [
+        "A secret key shared between client and server",
+        "A random value added to each password before hashing",
+        "A technique to make hashing algorithms faster",
+        "A method to compress passwords before storage"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In password hashing, a salt is a random value that is generated for each user and added to their password before hashing. This ensures that even if two users have the same password, their stored hash values will be different. Salting prevents the use of precomputed tables (rainbow tables) for cracking passwords."
+    },
+    {
+      "id": "q25",
+      "question": "What is the primary threat that quantum computing poses to current cryptographic systems?",
+      "options": [
+        "Quantum computers will make all encryption impossible",
+        "Quantum computers will break symmetric encryption algorithms like AES",
+        "Quantum computers will efficiently solve problems that current asymmetric cryptography relies on",
+        "Quantum computers will make hash functions reversible"
+      ],
+      "correctAnswer": 2,
+      "explanation": "The primary threat of quantum computing to cryptography is that quantum algorithms (particularly Shor's algorithm) can efficiently solve the mathematical problems that current asymmetric cryptography relies on, such as integer factorization (RSA) and discrete logarithms (Diffie-Hellman, ECC). Symmetric encryption and hash functions are less affected, though they may require larger key sizes."
+    }
+  ]
+}

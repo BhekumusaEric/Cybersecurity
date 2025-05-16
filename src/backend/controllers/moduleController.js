@@ -1,4 +1,4 @@
-import { Module, Course, Lab, Assessment, User } from '../models/index.js';
+import { Module, Course, Lab, Assessment, User, ModuleProgress } from '../models/index.js';
 import logger from '../utils/logger.js';
 import { sequelize } from '../config/database.js';
 
@@ -8,7 +8,7 @@ import { sequelize } from '../config/database.js';
 export const getModules = async (req, res, next) => {
   try {
     const { courseId } = req.params;
-    
+
     // Check if course exists
     const course = await Course.findByPk(courseId);
     if (!course) {
@@ -17,14 +17,14 @@ export const getModules = async (req, res, next) => {
         message: 'Course not found'
       });
     }
-    
+
     const modules = await Module.findAll({
       where: {
         courseId,
         isPublished: true
       },
-      attributes: { 
-        exclude: ['content', 'createdAt', 'updatedAt'] 
+      attributes: {
+        exclude: ['content', 'createdAt', 'updatedAt']
       },
       order: [['order', 'ASC']]
     });
@@ -71,10 +71,20 @@ export const getModule = async (req, res, next) => {
 
     // Get user's progress for this module
     let progress = 0;
+    let moduleProgressRecord = null;
+
     if (req.user) {
-      // In a real app, you would have a ModuleProgress model to track this
-      // For now, we'll return a mock progress value
-      progress = Math.floor(Math.random() * 101); // 0-100
+      // Get the user's progress for this module from the ModuleProgress model
+      moduleProgressRecord = await ModuleProgress.findOne({
+        where: {
+          userId: req.user.id,
+          moduleId: req.params.id
+        }
+      });
+
+      if (moduleProgressRecord) {
+        progress = moduleProgressRecord.progress;
+      }
     }
 
     // Get next and previous modules
@@ -112,7 +122,7 @@ export const getModule = async (req, res, next) => {
 export const createModule = async (req, res, next) => {
   try {
     const { courseId } = req.params;
-    
+
     // Check if course exists
     const course = await Course.findByPk(courseId);
     if (!course) {
@@ -121,12 +131,12 @@ export const createModule = async (req, res, next) => {
         message: 'Course not found'
       });
     }
-    
+
     // Get the highest order value to place the new module at the end
     const highestOrder = await Module.max('order', {
       where: { courseId }
     }) || 0;
-    
+
     const module = await Module.create({
       ...req.body,
       courseId,
@@ -174,7 +184,7 @@ export const updateModule = async (req, res, next) => {
 // @access  Private/Admin
 export const deleteModule = async (req, res, next) => {
   const transaction = await sequelize.transaction();
-  
+
   try {
     const module = await Module.findByPk(req.params.id);
 
@@ -194,8 +204,8 @@ export const deleteModule = async (req, res, next) => {
     // Reorder remaining modules
     await Module.update(
       { order: sequelize.literal('order - 1') },
-      { 
-        where: { 
+      {
+        where: {
           courseId,
           order: { [Op.gt]: deletedOrder }
         },
@@ -221,18 +231,18 @@ export const deleteModule = async (req, res, next) => {
 // @access  Private/Admin
 export const reorderModules = async (req, res, next) => {
   const transaction = await sequelize.transaction();
-  
+
   try {
     const { courseId } = req.params;
     const { moduleOrder } = req.body;
-    
+
     if (!Array.isArray(moduleOrder)) {
       return res.status(400).json({
         success: false,
         message: 'moduleOrder must be an array of module IDs'
       });
     }
-    
+
     // Check if course exists
     const course = await Course.findByPk(courseId);
     if (!course) {
@@ -241,7 +251,7 @@ export const reorderModules = async (req, res, next) => {
         message: 'Course not found'
       });
     }
-    
+
     // Check if all modules exist and belong to the course
     const modules = await Module.findAll({
       where: {
@@ -249,27 +259,27 @@ export const reorderModules = async (req, res, next) => {
         courseId
       }
     });
-    
+
     if (modules.length !== moduleOrder.length) {
       return res.status(400).json({
         success: false,
         message: 'One or more module IDs are invalid or do not belong to this course'
       });
     }
-    
+
     // Update order for each module
     for (let i = 0; i < moduleOrder.length; i++) {
       await Module.update(
         { order: i + 1 },
-        { 
+        {
           where: { id: moduleOrder[i] },
           transaction
         }
       );
     }
-    
+
     await transaction.commit();
-    
+
     // Get updated modules
     const updatedModules = await Module.findAll({
       where: { courseId },
@@ -301,17 +311,32 @@ export const completeModule = async (req, res, next) => {
       });
     }
 
-    // In a real app, you would update a ModuleProgress model
-    // For now, we'll just return a success response
-    
+    // Find or create a ModuleProgress record
+    const [moduleProgress, created] = await ModuleProgress.findOrCreate({
+      where: {
+        userId: req.user.id,
+        moduleId: module.id
+      },
+      defaults: {
+        progress: 100,
+        status: 'completed',
+        completedAt: new Date()
+      }
+    });
+
+    // If the record already existed, update it
+    if (!created) {
+      await moduleProgress.update({
+        progress: 100,
+        status: 'completed',
+        completedAt: new Date()
+      });
+    }
+
     res.status(200).json({
       success: true,
       message: 'Module marked as completed',
-      data: {
-        moduleId: module.id,
-        userId: req.user.id,
-        completedAt: new Date()
-      }
+      data: moduleProgress
     });
   } catch (error) {
     logger.error(`Error completing module ${req.params.id}:`, error);
@@ -333,19 +358,29 @@ export const getModuleProgress = async (req, res, next) => {
       });
     }
 
-    // In a real app, you would fetch from a ModuleProgress model
-    // For now, we'll return mock data
-    const progress = {
-      moduleId: module.id,
-      userId: req.user.id,
-      progress: Math.floor(Math.random() * 101), // 0-100
-      lastAccessed: new Date(),
-      completedAt: null
-    };
+    // Find or create a ModuleProgress record
+    const [moduleProgress, created] = await ModuleProgress.findOrCreate({
+      where: {
+        userId: req.user.id,
+        moduleId: module.id
+      },
+      defaults: {
+        progress: 0,
+        status: 'not_started',
+        lastAccessedAt: new Date()
+      }
+    });
+
+    // Update the lastAccessedAt timestamp
+    if (!created) {
+      await moduleProgress.update({
+        lastAccessedAt: new Date()
+      });
+    }
 
     res.status(200).json({
       success: true,
-      data: progress
+      data: moduleProgress
     });
   } catch (error) {
     logger.error(`Error fetching progress for module ${req.params.id}:`, error);

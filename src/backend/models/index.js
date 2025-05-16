@@ -3,6 +3,7 @@ import Course from './Course.js';
 import Module from './Module.js';
 import Lab from './Lab.js';
 import Assessment from './Assessment.js';
+import ModuleProgress from './ModuleProgress.js';
 import { sequelize } from '../config/database.js';
 
 // Define relationships between models
@@ -121,6 +122,10 @@ const AssessmentAttempt = sequelize.define('AssessmentAttempt', {
 User.belongsToMany(Assessment, { through: AssessmentAttempt });
 Assessment.belongsToMany(User, { through: AssessmentAttempt });
 
+// User-Module progress relationship
+User.belongsToMany(Module, { through: ModuleProgress });
+Module.belongsToMany(User, { through: ModuleProgress });
+
 export {
   User,
   Course,
@@ -130,5 +135,6 @@ export {
   UserCourse,
   LabSubmission,
   AssessmentAttempt,
+  ModuleProgress,
   sequelize
 };

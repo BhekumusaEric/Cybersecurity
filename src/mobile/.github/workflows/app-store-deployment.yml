@@ -1,0 +1,193 @@
+name: App Store Deployment
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/mobile/**'
+      - '.github/workflows/app-store-deployment.yml'
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to deploy (ios, android, or both)'
+        required: true
+        default: 'both'
+      track:
+        description: 'Release track (beta or production)'
+        required: true
+        default: 'beta'
+
+jobs:
+  prepare:
+    name: Prepare for deployment
+    runs-on: ubuntu-latest
+    outputs:
+      deploy_ios: ${{ steps.check-platform.outputs.deploy_ios }}
+      deploy_android: ${{ steps.check-platform.outputs.deploy_android }}
+      track: ${{ steps.check-track.outputs.track }}
+    
+    steps:
+      - name: Check platform to deploy
+        id: check-platform
+        run: |
+          PLATFORM="${{ github.event.inputs.platform || 'both' }}"
+          if [ "$PLATFORM" = "ios" ] || [ "$PLATFORM" = "both" ]; then
+            echo "deploy_ios=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_ios=false" >> $GITHUB_OUTPUT
+          fi
+          
+          if [ "$PLATFORM" = "android" ] || [ "$PLATFORM" = "both" ]; then
+            echo "deploy_android=true" >> $GITHUB_OUTPUT
+          else
+            echo "deploy_android=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check release track
+        id: check-track
+        run: |
+          TRACK="${{ github.event.inputs.track || 'beta' }}"
+          echo "track=$TRACK" >> $GITHUB_OUTPUT
+  
+  deploy-ios:
+    name: Deploy iOS to App Store
+    needs: prepare
+    if: needs.prepare.outputs.deploy_ios == 'true'
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: src/mobile/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: src/mobile
+        run: |
+          npm ci
+          cd ios && pod install
+      
+      - name: Install Fastlane
+        working-directory: src/mobile
+        run: |
+          gem install bundler
+          bundle install
+      
+      - name: Generate assets
+        working-directory: src/mobile
+        run: bundle exec fastlane generate_assets
+      
+      - name: Setup iOS certificates
+        working-directory: src/mobile
+        env:
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY_CONTENT }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+        run: |
+          echo "$APPLE_API_KEY_CONTENT" > apple_api_key.p8
+          bundle exec fastlane match appstore --readonly
+      
+      - name: Deploy to TestFlight/App Store
+        working-directory: src/mobile
+        env:
+          APPLE_API_KEY_ID: ${{ secrets.APPLE_API_KEY_ID }}
+          APPLE_API_KEY_ISSUER_ID: ${{ secrets.APPLE_API_KEY_ISSUER_ID }}
+          APPLE_API_KEY_CONTENT: ${{ secrets.APPLE_API_KEY_CONTENT }}
+          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+        run: |
+          if [ "${{ needs.prepare.outputs.track }}" = "beta" ]; then
+            bundle exec fastlane ios beta
+          else
+            bundle exec fastlane ios release
+          fi
+  
+  deploy-android:
+    name: Deploy Android to Play Store
+    needs: prepare
+    if: needs.prepare.outputs.deploy_android == 'true'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+          cache-dependency-path: src/mobile/package-lock.json
+      
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      
+      - name: Install dependencies
+        working-directory: src/mobile
+        run: npm ci
+      
+      - name: Install Fastlane
+        working-directory: src/mobile
+        run: |
+          gem install bundler
+          bundle install
+      
+      - name: Generate assets
+        working-directory: src/mobile
+        run: bundle exec fastlane generate_assets
+      
+      - name: Setup Android signing
+        working-directory: src/mobile
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/upload-keystore.jks
+          
+          cat > android/key.properties << EOL
+          storePassword=$ANDROID_KEYSTORE_PASSWORD
+          keyPassword=$ANDROID_KEY_PASSWORD
+          keyAlias=$ANDROID_KEY_ALIAS
+          storeFile=upload-keystore.jks
+          EOL
+      
+      - name: Setup Google Play API access
+        working-directory: src/mobile
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" > google-play-service-account.json
+      
+      - name: Deploy to Play Store
+        working-directory: src/mobile
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ "${{ needs.prepare.outputs.track }}" = "beta" ]; then
+            bundle exec fastlane android beta
+          else
+            bundle exec fastlane android release
+          fi

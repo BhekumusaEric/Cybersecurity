@@ -1,0 +1,143 @@
+{
+  "name": "EthicalHackingLMS",
+  "displayName": "Ethical Hacking LMS",
+  "expo": {
+    "name": "Ethical Hacking LMS",
+    "slug": "ethical-hacking-lms",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./src/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1976d2"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ethicalhackinglms.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to allow you to take profile pictures and scan QR codes for lab access.",
+        "NSPhotoLibraryUsageDescription": "This app uses the photo library to allow you to select profile pictures.",
+        "NSPhotoLibraryAddUsageDescription": "This app saves certificates and screenshots to your photo library.",
+        "NSFaceIDUsageDescription": "This app uses Face ID to securely log you in to your account.",
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to find nearby study groups and events.",
+        "UIBackgroundModes": ["fetch", "remote-notification"]
+      },
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "icon": {
+        "ios": {
+          "app": {
+            "20x20": "./src/assets/ios/icon-20x20.png",
+            "29x29": "./src/assets/ios/icon-29x29.png",
+            "40x40": "./src/assets/ios/icon-40x40.png",
+            "60x60": "./src/assets/ios/icon-60x60.png",
+            "76x76": "./src/assets/ios/icon-76x76.png",
+            "83.5x83.5": "./src/assets/ios/icon-83.5x83.5.png",
+            "1024x1024": "./src/assets/ios/icon-1024x1024.png"
+          },
+          "spotlight": {
+            "20x20": "./src/assets/ios/icon-20x20.png",
+            "29x29": "./src/assets/ios/icon-29x29.png",
+            "40x40": "./src/assets/ios/icon-40x40.png",
+            "60x60": "./src/assets/ios/icon-60x60.png"
+          },
+          "settings": {
+            "29x29": "./src/assets/ios/icon-29x29.png"
+          },
+          "notification": {
+            "20x20": "./src/assets/ios/icon-20x20.png"
+          }
+        }
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/android/adaptive-icon-foreground.png",
+        "backgroundImage": "./src/assets/android/adaptive-icon-background.png"
+      },
+      "package": "com.ethicalhackinglms.app",
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "VIBRATE"
+      ],
+      "icon": {
+        "mdpi": "./src/assets/android/icon-mdpi.png",
+        "hdpi": "./src/assets/android/icon-hdpi.png",
+        "xhdpi": "./src/assets/android/icon-xhdpi.png",
+        "xxhdpi": "./src/assets/android/icon-xxhdpi.png",
+        "xxxhdpi": "./src/assets/android/icon-xxxhdpi.png"
+      },
+      "splash": {
+        "mdpi": "./src/assets/android/splash-mdpi.png",
+        "hdpi": "./src/assets/android/splash-hdpi.png",
+        "xhdpi": "./src/assets/android/splash-xhdpi.png",
+        "xxhdpi": "./src/assets/android/splash-xxhdpi.png",
+        "xxxhdpi": "./src/assets/android/splash-xxxhdpi.png"
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "ethicalhackinglms.com",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./src/assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./src/assets/notification-icon.png",
+          "color": "#1976d2",
+          "sounds": ["./src/assets/notification.wav"]
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
+      ],
+      "expo-localization"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "12345678-1234-1234-1234-123456789012"
+      }
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/12345678-1234-1234-1234-123456789012"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
+  }
+}

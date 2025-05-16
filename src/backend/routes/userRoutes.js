@@ -8,6 +8,11 @@ import {
   updateUser,
   deleteUser
 } from '../controllers/userController.js';
+import {
+  getUserProgress,
+  getUserDeadlines,
+  getUserActivities
+} from '../controllers/userProgressController.js';
 import { protect, authorize } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -19,6 +24,11 @@ router.use(protect);
 router.get('/profile', getUserProfile);
 router.put('/profile', updateUserProfile);
 router.get('/dashboard', getUserDashboard);
+
+// User progress routes
+router.get('/progress', getUserProgress);
+router.get('/deadlines', getUserDeadlines);
+router.get('/activities', getUserActivities);
 
 // Admin-only routes
 router.get('/', authorize('admin'), getUsers);
